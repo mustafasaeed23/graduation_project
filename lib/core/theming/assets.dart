@@ -1,0 +1,153 @@
+class Assets {
+  Assets._();
+
+  // Icons
+
+  static const String homeIcon = "assets/icons/homeIcon.svg";
+  static const String wishListIcon = "assets/icons/wishListIcon.svg";
+  static const String addIcon = "assets/icons/addIcon.svg";
+  static const String infoIcon = "assets/icons/infoIcon.svg";
+  static const String warningIcon = "assets/icons/warningIcon.svg";
+  static const String trashCanIcon = "assets/icons/trashCanIcon.svg";
+  static const String miniBusDriverIcon = "assets/icons/miniBusDriverIcon.svg";
+
+  static const String removeIcon = "assets/icons/removeIcon.svg";
+  static const String medalIcon = "assets/icons/medalIcon.svg";
+
+  static const String sendIcon = "assets/icons/sendIcon.svg";
+  static const String xMark = "assets/icons/xMark.svg";
+  static const String xMarkOutlined = "assets/icons/xMarkOutlined.svg";
+  static const String busDoorIcon = "assets/icons/busDoorIcon.svg";
+  static const String busLeftWheelIcon = "assets/icons/busLeftWheelIcon.svg";
+  static const String toiletIcon = "assets/icons/toiletIcon.svg";
+  static const String busRightWheelIcon = "assets/icons/busRightWheelIcon.svg";
+  static const String seatsInstructionsContainer = "assets/icons/seatsInstructionsContainer.svg";
+  static const String driverPlace = "assets/icons/driverPlace.svg";
+  static const String badgeIcon = "assets/icons/badge.svg";
+  static const String notificationsIcon = "assets/icons/notificationsIconsvg.svg";
+  static const String profileIcon = "assets/icons/profileIcon.svg";
+  static const String ticketIcon = "assets/icons/ticketIcon.svg";
+  static const String googleIcon = "assets/icons/googleIcon.svg";
+  static const String saveIcon = "assets/icons/saveIcon.svg";
+  static const String arrowRight = "assets/icons/arrowRight.svg";
+  static const String onboardingArrowRightIcon = "assets/icons/onboardingArrowRightIcon.svg";
+  static const String onboardingArrowLeftIcon = "assets/icons/onboardingArrowLeftIcon.svg";
+  static const String arrowLeft = "assets/icons/arrowLeft.svg";
+  static const String returnDateIcon = "assets/icons/returnDateIcon.svg";
+  static const String locationIcon = "assets/icons/map-marker.svg";
+  static const String destinationIcon = "assets/icons/destinationIcon.svg";
+  static const String departureDateIcon = "assets/icons/departureDateIcon.svg";
+  static const String starIcon = "assets/icons/starIcon.svg";
+  static const String verifiedIcon = "assets/icons/verified_icon.svg";
+  static const String editIcon = "assets/icons/edit_icon.svg";
+  static const String loyaltyIcon = "assets/icons/Loyalty icon.svg";
+  static const String swapIcon = "assets/icons/swapIcon.svg";
+  static const String calendarIcon = "assets/icons/calendarIcon.svg";
+  static const String calendarAddIcon = "assets/icons/calendarAddIcon.svg";
+  static const String bustIcon = "assets/icons/bus.svg";
+  static const String faceBookIcon = "assets/icons/facebook_icon.svg";
+  static const String instagramIcon = "assets/icons/instagram-logo.svg";
+  static const String twitterIcon = "assets/icons/twitter_icon.svg";
+  static const String wcIcon = "assets/icons/badge-wc.svg";
+  static const String snaksAndDrinksIcon = "assets/icons/food.svg";
+  static const String dvdIcon = "assets/icons/dvdIcon.svg";
+  static const String inSeatScreenIcon = "assets/icons/full-screen-play.svg";
+  static const String gpsIcon = "assets/icons/location-arrow.svg";
+  static const String refrigeratorIcon = "assets/icons/refrigerator.svg";
+  static const String usbIcon = "assets/icons/usb-symbol.svg";
+  static const String wifiIcon = "assets/icons/wifi.svg";
+  static const String filterIcon = "assets/icons/filterIcon.svg";
+  static const String chevronBottomIcon = "assets/icons/chevronBottomIcon.svg";
+  static const String chevronTopIcon = "assets/icons/chevronTopIcon.svg";
+  static const String paymentIcon = "assets/icons/paymentIcon.svg";
+  static const String policyAndInstructionsIcon = "assets/icons/policyAndInstructionsIcon.svg";
+  static const String seatsIcon = "assets/icons/seatsIcon.svg";
+  static const String checkIcon = "assets/icons/checkIcon.svg";
+  static const String mailIcon = "assets/icons/mailIcon.svg";
+  static const String phoneIcon = "assets/icons/phoneIcon.svg";
+  static const String tripSummaryIcon = "assets/icons/tripSummaryIcon.svg";
+  static const String paymentFailedIcon = "assets/icons/paymentFailedIcon.svg";
+  static const String logOut = "assets/icons/logout.svg";
+  static const String airConditionerIcon = "assets/icons/airConditionerIcon.svg";
+  static const String directTripLeft = "assets/icons/directTripLeft.svg";
+  static const String directTripRight = "assets/icons/directTripRight.svg";
+  static const String rateStarIcon = "assets/icons/star.svg";
+  static const String facilitiesWifiIcon = "assets/icons/facilities_wifi.svg";
+  static const String facilitiesFoodIcon = "assets/icons/facilities_food.svg";
+  static const String facilitiesAcIcon = "assets/icons/facilities_ac.svg";
+  static const String facilitiesPoolIcon = "assets/icons/facilitiespool.svg";
+  static const String mapMarkerFilledIcon = "assets/icons/locationFilledIcon.svg";
+  static const String personLocationIcon = "assets/icons/personIconLocation.svg";
+  static const String callingPhone = "assets/icons/callingPhone.svg";
+  static const String purpleStarIcon = "assets/icons/purpleStarRating.png";
+  static const String shareIcon = "assets/icons/shareIcon.svg";
+  static const String identifyIcon = "assets/icons/identifyIcon.svg";
+  static const String teaIcon = "assets/icons/teaIcon.svg";
+  static const String refundleIcon = "assets/icons/refundleIcon.svg";
+  static const String bathIcon = "assets/icons/bathIcon.svg";
+  static const String airConditionIcon = "assets/icons/airConditionIcon.svg";
+  static const String orangeWifiIcon = "assets/icons/orangeWifi.svg";
+  static const String bedIcon = "assets/icons/bedIcon.svg";
+  static const String googleLogo = "assets/icons/google_logo.svg";
+  static const String appleLogo = "assets/icons/apple-logo.svg";
+  static const String lockKey = "assets/icons/LockKeyOpenIcon.svg";
+  static const String busReversedIcon = "assets/icons/busReversedIcon.svg";
+  static const String copyIcon = "assets/icons/CopySimple.svg";
+  static const String downloadIcon = "assets/icons/download_icon.svg";
+  static const String promoCodeIcon = "assets/icons/promoCodeIcon.svg";
+  static const String alarmIcon = "assets/icons/alarmIcon.svg";
+  static const String creditCardIcon = "assets/icons/creditCardIcon.svg";
+  // Lottie
+  static const String celebrationLottie = "assets/lottie/celebrationLottie.json";
+
+  // Images
+  static const String onboardingImage1 = "assets/images/Illustration Walkthrough 1.svg";
+  static const String onboardingImage2 = "assets/images/Illustrations Walkthrough 2.svg";
+  static const String onboardingImage3 = "assets/images/Illustration Walkthrough 3.svg";
+  static const String onboardingImage4 = "assets/images/Illustration Walkthrough 4.svg";
+  static const String profilePictureMale = "assets/icons/male_avatar.svg";
+  static const String profilePictureFemale = "assets/icons/female_avatar.svg";
+  static const String accommodationImage = "assets/images/accommodationImage.svg";
+  static const String busAndAccommodationImage = "assets/images/busAndAccommodationImage.svg";
+  static const String planeImage = "assets/images/planeImage.svg";
+  static const String trainImage = "assets/images/trainImage.svg";
+  static const String busImage = "assets/images/busImage.svg";
+  static const String searchImage = "assets/images/searchImage.svg";
+  static const String compareImage = "assets/images/compareImage.svg";
+  static const String bookImage = "assets/images/bookImage.svg";
+  static const String loginLogo = "assets/appData/loginLogo.png";
+
+  static const String tregoLogo = "assets/images/trego_logo.png";
+  static const String otpImage = "assets/images/lock_otp.svg";
+  static const String registerSecondAr = "assets/images/Signup3ar.svg";
+  static const String registerSecondEn = "assets/images/Signup3En.svg";
+  static const String signUpMethodImage = "assets/images/Sign_up_method.png";
+  static const String tregoWordImage = "assets/images/Trego_Word.png";
+  static const String keyForgetPass = "assets/images/keyForgetPass.svg";
+  static const String resetPassDoneImage = "assets/images/done_reset.svg";
+
+  static const String socialMediaImage = "assets/images/social_media.svg";
+  static const String referFriend = "assets/images/refer_a_friend.svg";
+  static const String accommodationAppBarImage = "assets/images/accommodationAppBarImage.svg";
+  static const String tripWidgetWaveEn = "assets/images/tripWidgetWaveEn.svg";
+  static const String tripWidgetWaveAr = "assets/images/tripWidgetWaveAr.svg";
+  static const String trainBGImage = "assets/images/trainBGImage.svg";
+  static const String planeBGImage = "assets/images/planeBGImage.svg";
+  static const String busBGImage = "assets/images/busBGImage.svg";
+  static const String ticketsImage = "assets/images/Tickets.svg";
+  static const String ticketFrame = "assets/images/ticket_frame.png";
+  static const String customerSupportImage = "assets/images/customerSupportImage.png";
+  static const String notificationsImage = "assets/images/notification_image.svg";
+  static const String paymobImage = "assets/images/paymobImage.png";
+  static const String greatNewsImage = "assets/images/greatNewsImage.png";
+  static const String notReadyImage = "assets/images/notReadyImage.png";
+  static const String paymentSuccessImage = "assets/images/paymentSuccessImage.png";
+  static const String successfulBooking = "assets/images/successfulBooking.png";
+  static const String sparklesIllustration = "assets/images/sparkles illustration.svg";
+  static const String qrCodeImage = "assets/images/qrcode_image.svg";
+
+  // Failure Images
+  static const String offlineFailureImage = "assets/images/offlineFailureImage.svg";
+  static const String emptyListFailureImage = "assets/images/emptyListFailureImage.svg";
+  static const String errorImage = "assets/images/Error_icon.svg";
+}
