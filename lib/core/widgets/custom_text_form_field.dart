@@ -49,12 +49,14 @@ class CustomTextFormField extends StatelessWidget {
   final TextAlign? textAlign;
   final FontWeight? textWeight;
   final FocusNode? focusNode;
+  final double? width;
   final InputBorder? errorBorder;
   final bool isTextDirectionReversed;
   final void Function()? onEditingComplete;
   const CustomTextFormField(
       {super.key,
       this.controller,
+      this.width,
       this.onEditingComplete,
       this.isTextDirectionReversed = false,
       this.textAlign,
@@ -102,6 +104,7 @@ class CustomTextFormField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
+      width: width ,
       child: TextFormField(
         cursorColor: textColor,
         onEditingComplete: onEditingComplete,

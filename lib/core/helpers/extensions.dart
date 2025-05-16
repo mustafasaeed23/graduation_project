@@ -219,3 +219,34 @@ extension SizedBoxExtension1 on int {
   SizedBox get height => SizedBox(height: h);
   SizedBox get width => SizedBox(width: w);
 }
+
+extension PaddingExtension on int {
+  EdgeInsets get paddingAll => EdgeInsets.all(toDouble());
+  EdgeInsets get paddingHorizontal =>
+      EdgeInsets.symmetric(horizontal: toDouble());
+  EdgeInsets get paddingVertical => EdgeInsets.symmetric(vertical: toDouble());
+}
+
+extension PaddingWidgetExtension on Widget {
+  Widget withSymmetricPadding({double? horizontal, double? vertical}) =>
+      Padding(
+        padding: EdgeInsets.symmetric(
+          horizontal: horizontal ?? 0,
+          vertical: vertical ?? 0,
+        ),
+        child: this,
+      );
+
+  Widget withDirectionalOnlyPadding(
+      {double? start, double? end, double? top, double? bottom}) {
+    return Padding(
+      padding: EdgeInsetsDirectional.only(
+        start: start ?? 0,
+        end: end ?? 0,
+        top: top ?? 0,
+        bottom: bottom ?? 0,
+      ),
+      child: this,
+    );
+  }
+}

@@ -73,6 +73,8 @@ class Text10 extends StatelessWidget {
       textDirection: direction ?? (CacheHelper.isEn ? TextDirection.ltr : TextDirection.rtl),
     );
   }
+
+  withDirectionalOnlyPadding({required int start}) {}
 }
 
 class Text12 extends StatelessWidget {

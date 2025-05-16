@@ -1,6 +1,18 @@
+import 'package:flutter/foundation.dart';
 import 'package:get_it/get_it.dart';
-import 'package:google_sign_in/google_sign_in.dart';
-import 'package:graduation_project/core/Api/trego_dio.dart';
+import 'package:graduation_project/core/Api/wamdah_dio.dart';
+import 'package:graduation_project/features/auth/login/Data/Data%20Source/login_data_source.dart';
+import 'package:graduation_project/features/auth/login/Data/Repository/login_imply_repo.dart';
+import 'package:graduation_project/features/auth/login/Domain/Contract%20Repository/login_contract_repo.dart';
+import 'package:graduation_project/features/auth/login/Domain/Use%20Cases/login_use_case.dart';
+import 'package:graduation_project/features/auth/register/Data/Data%20Source/register_data_source.dart';
+import 'package:graduation_project/features/auth/register/Data/Repository/register_imply_repo.dart';
+import 'package:graduation_project/features/auth/register/Domain/Contract%20Repo/register_contract_repo.dart';
+import 'package:graduation_project/features/auth/register/Domain/Use%20Case/register_use_case.dart';
+import 'package:graduation_project/features/dashboard/Data/Data%20Source/dashboard_data_source.dart';
+import 'package:graduation_project/features/dashboard/Data/repo/dashboard_imply_repo.dart';
+import 'package:graduation_project/features/dashboard/Domain/contract%20repo/dashboard_contract_repo.dart';
+import 'package:graduation_project/features/dashboard/Domain/usecases/dashboard_information_use_case.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -25,16 +37,68 @@ class ServicesLocator {
     getIt.registerFactory<SharedPreferences>(() => sharedPreferences);
 
     /// Network info
-    getIt.registerLazySingleton<NetworkInfo>(() => NetworkInfoImpl(getIt()));
+    // getIt.registerLazySingleton<NetworkInfo>(() => NetworkInfoImpl(getIt()));
 
-    /// Network Connection checker
-    getIt.registerLazySingleton<InternetConnectionChecker>(
-      () => InternetConnectionChecker(),
+    // /// Network Connection checker
+    // getIt.registerLazySingleton<InternetConnectionChecker>(
+    //   () => InternetConnectionChecker(),
+    // );
+    if (kIsWeb) {
+      getIt.registerLazySingleton<NetworkInfo>(() => WebNetworkInfo());
+    } else {
+      getIt.registerLazySingleton<InternetConnectionChecker>(
+        () => InternetConnectionChecker(),
+      );
+      getIt.registerLazySingleton<NetworkInfo>(() => NetworkInfoImpl(getIt()));
+    }
+
+    /// ========================================== Login====================================
+    getIt.registerLazySingleton<LoginContractRepo>(
+      () => LoginImplyRepo(loginDataSource: getIt.get<LoginDataSource>()),
     );
 
-    /// Google SignIn
-    getIt.registerLazySingleton(() => GoogleSignIn(scopes: ["email"]));
+    getIt.registerLazySingleton<LoginDataSource>(() => LoginDataSource());
 
-    /// Login Data Source
+    getIt.registerLazySingleton<LoginUseCase>(
+      () => LoginUseCase(loginContractRepo: getIt.get<LoginContractRepo>()),
+    );
+
+    /// ========================================== Register====================================
+    /// Register Contract Repo
+    getIt.registerLazySingleton<RegisterContractRepo>(
+      () => RegisterImplyRepo(
+        registerDataSource: getIt.get<RegisterDataSource>(),
+      ),
+    );
+
+    /// Register Data Source
+    getIt.registerLazySingleton<RegisterDataSource>(() => RegisterDataSource());
+
+    /// Register Use Case
+    getIt.registerLazySingleton<RegisterUseCase>(
+      () => RegisterUseCase(
+        registerContractRepo: getIt.get<RegisterContractRepo>(),
+      ),
+    );
+
+    ///=================================dashboard=============================================
+    // dashboard Data Source
+    getIt.registerLazySingleton<DashboardDataSource>(
+      () => DashboardDataSource(),
+    );
+
+    // dashboard repo
+    getIt.registerLazySingleton<DashboardContractRepo>(
+      () => DashboardImplyRepo(
+        dashboardDataSource: getIt.get<DashboardDataSource>(),
+      ),
+    );
+
+    // dashboard use case
+    getIt.registerLazySingleton<DashboardInformationUseCase>(
+      () => DashboardInformationUseCase(
+        dashboardContractRepo: getIt.get<DashboardContractRepo>(),
+      ),
+    );
   }
 }

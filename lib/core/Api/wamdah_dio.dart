@@ -5,13 +5,13 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:graduation_project/core/Api/end_points.dart';
-import 'package:graduation_project/core/cache_helper/cache_values.dart';
-import 'package:graduation_project/core/constant.dart';
-import 'package:graduation_project/core/utilies/easy_loading.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 
-import '../cache_helper/cache_helper.dart';
+import 'package:graduation_project/core/Api/end_points.dart';
+import 'package:graduation_project/core/cache_helper/cache_values.dart';
+import 'package:graduation_project/core/cache_helper/cache_helper.dart';
+import 'package:graduation_project/core/constant.dart';
+import 'package:graduation_project/core/utilies/easy_loading.dart';
 
 const String applicationJson = 'application/json';
 const String contentType = 'content-type';
@@ -27,8 +27,7 @@ class TimeoutInterceptor extends Interceptor {
   @override
   void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
     // Start a timer to monitor the request duration
-    Timer timer;
-    timer = Timer(timeoutDuration, () {
+    Timer timer = Timer(timeoutDuration, () {
       if (options.extra['completed'] != true) {
         showCustomLoading(
           message: "Poor Internet Connection".tr(),
@@ -37,7 +36,7 @@ class TimeoutInterceptor extends Interceptor {
       }
     });
 
-    // Mark the start of the request
+    // Mark the start of the request and save the timer
     options.extra['startTime'] = DateTime.now();
     options.extra['completed'] = false;
     options.extra['timer'] = timer;
@@ -47,9 +46,8 @@ class TimeoutInterceptor extends Interceptor {
 
   @override
   void onResponse(Response response, ResponseInterceptorHandler handler) {
-    // Mark the request as completed
+    // Mark the request as completed and cancel the timer
     response.requestOptions.extra['completed'] = true;
-    // Cancel the timer if the request completes before the timeout
     Timer? timer = response.requestOptions.extra['timer'];
     if (timer != null && timer.isActive) {
       timer.cancel();
@@ -60,9 +58,8 @@ class TimeoutInterceptor extends Interceptor {
 
   @override
   void onError(DioException err, ErrorInterceptorHandler handler) {
-    // Mark the request as completed
+    // Mark the request as completed and cancel the timer
     err.requestOptions.extra['completed'] = true;
-    // Cancel the timer if the request fails before the timeout
     Timer? timer = err.requestOptions.extra['timer'];
     if (timer != null && timer.isActive) {
       timer.cancel();
@@ -73,7 +70,7 @@ class TimeoutInterceptor extends Interceptor {
 }
 
 class TokenInterceptor extends Interceptor {
-  Dio dio;
+  final Dio dio;
   String? accessToken;
   String? refreshToken;
 
@@ -85,18 +82,18 @@ class TokenInterceptor extends Interceptor {
 
   @override
   void onResponse(Response response, ResponseInterceptorHandler handler) async {
+    // Handle token expiration and refresh
     if (response.statusCode == 401 &&
         response.data["errorCode"] == "10001" &&
         await CacheHelper.getSecuredData(key: CacheKeys.refreshToken) != null) {
       printDebug(
-        "Refresh token Test : ${await CacheHelper.getSecuredData(key: CacheKeys.refreshToken)}",
+        "Refresh token present: ${await CacheHelper.getSecuredData(key: CacheKeys.refreshToken)}",
       );
-      // Check if the status code is 401 in the response
       try {
         final newTokens = await _refreshToken();
         if (newTokens != null) {
           accessToken = newTokens['accessToken'];
-          // Retry the failed request with the new token
+          // Retry the failed request with the new access token
           final options = response.requestOptions;
           options.headers['Authorization'] = 'Bearer $accessToken';
           final retryResponse = await dio.request(
@@ -108,11 +105,13 @@ class TokenInterceptor extends Interceptor {
           if (retryResponse.statusCode == 200) {
             return handler.resolve(retryResponse);
           } else {
-            removingRefreshToken();
+            _removeTokens();
           }
+        } else {
+          _removeTokens();
         }
       } catch (e) {
-        removingRefreshToken();
+        _removeTokens();
         return handler.reject(
           DioException(
             requestOptions: response.requestOptions,
@@ -129,14 +128,13 @@ class TokenInterceptor extends Interceptor {
   Future<Map<String, String>?> _refreshToken() async {
     try {
       final response = await dio.post(
-        EndPoints.refreshAccessToken, // Your refresh token endpoint
+        EndPoints.refreshAccessToken,
         data: {'refreshToken': refreshToken},
       );
       if (response.statusCode == 200) {
-        CacheHelper.saveAccessToken(accessToken: response.data['accessToken']);
-        return {'accessToken': response.data['accessToken']};
-      } else {
-        return null;
+        final newAccessToken = response.data['accessToken'];
+        await CacheHelper.saveAccessToken(accessToken: newAccessToken);
+        return {'accessToken': newAccessToken};
       }
     } catch (e) {
       printDebug('Token refresh failed: $e');
@@ -144,7 +142,7 @@ class TokenInterceptor extends Interceptor {
     return null;
   }
 
-  void removingRefreshToken() {
+  void _removeTokens() {
     CacheHelper.clearAllSecuredData();
     CacheHelper.removeData(key: CacheKeys.profileData);
   }
@@ -153,13 +151,15 @@ class TokenInterceptor extends Interceptor {
 class WamdahDio {
   static late Dio dio;
 
-  void init() async {
-    BaseOptions baseOptions = BaseOptions(
+  Future<void> init() async {
+    final baseOptions = BaseOptions(
       baseUrl: EndPoints.baseUrl,
       receiveDataWhenStatusError: true,
-      validateStatus: (status) => true,
+      validateStatus: (_) => true,
     );
+
     dio = Dio(baseOptions);
+
     dio.interceptors.addAll([
       if (kDebugMode)
         PrettyDioLogger(
@@ -169,12 +169,8 @@ class WamdahDio {
         ),
       TokenInterceptor(
         dio: dio,
-        accessToken: await CacheHelper.getSecuredData(
-          key: CacheKeys.accessToken,
-        ),
-        refreshToken: await CacheHelper.getSecuredData(
-          key: CacheKeys.refreshToken,
-        ),
+        accessToken: await CacheHelper.getSecuredData(key: CacheKeys.accessToken),
+        refreshToken: await CacheHelper.getSecuredData(key: CacheKeys.refreshToken),
       ),
       TimeoutInterceptor(),
     ]);
@@ -186,11 +182,10 @@ class WamdahDio {
     Map<String, dynamic>? additionalHeaders,
   }) async {
     dio.options.headers = {
-      authorization:
-          "Bearer ${await CacheHelper.getSecuredData(key: CacheKeys.accessToken)}",
+      authorization: "${await CacheHelper.getSecuredData(key: CacheKeys.accessToken)}",
       ...?additionalHeaders,
     };
-    return await dio.get(endPoint, data: data);
+    return dio.get(endPoint, data: data);
   }
 
   Future<Response> post({
@@ -199,11 +194,10 @@ class WamdahDio {
     Map<String, dynamic>? additionalHeaders,
   }) async {
     dio.options.headers = {
-      authorization:
-          "Bearer ${await CacheHelper.getSecuredData(key: CacheKeys.accessToken)}",
+      authorization: "${await CacheHelper.getSecuredData(key: CacheKeys.accessToken)}",
       ...?additionalHeaders,
     };
-    return await dio.post(endPoint, data: data);
+    return dio.post(endPoint, data: data);
   }
 
   Future<Response> put({
@@ -212,11 +206,10 @@ class WamdahDio {
     Map<String, dynamic>? additionalHeaders,
   }) async {
     dio.options.headers = {
-      authorization:
-          "Bearer ${await CacheHelper.getSecuredData(key: CacheKeys.accessToken)}",
+      authorization: "${await CacheHelper.getSecuredData(key: CacheKeys.accessToken)}",
       ...?additionalHeaders,
     };
-    return await dio.put(endPoint, data: data);
+    return dio.put(endPoint, data: data);
   }
 
   Future<Response> delete({
@@ -225,11 +218,10 @@ class WamdahDio {
     Map<String, dynamic>? additionalHeaders,
   }) async {
     dio.options.headers = {
-      authorization:
-          "Bearer ${await CacheHelper.getSecuredData(key: CacheKeys.accessToken)}",
+      authorization: "${await CacheHelper.getSecuredData(key: CacheKeys.accessToken)}",
       ...?additionalHeaders,
     };
-    return await dio.delete(endPoint, data: data);
+    return dio.delete(endPoint, data: data);
   }
 
   Future<Response> patch({
@@ -238,10 +230,9 @@ class WamdahDio {
     Map<String, dynamic>? additionalHeaders,
   }) async {
     dio.options.headers = {
-      authorization:
-          "Bearer ${await CacheHelper.getSecuredData(key: CacheKeys.accessToken)}",
+      authorization: "${await CacheHelper.getSecuredData(key: CacheKeys.accessToken)}",
       ...?additionalHeaders,
     };
-    return await dio.patch(endPoint, data: data);
+    return dio.patch(endPoint, data: data);
   }
 }

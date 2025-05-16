@@ -43,13 +43,13 @@ class CacheHelper {
     isLoggedIn = await condition();
   }
 
-  static String initialRoute() {
-    return passedOnBoarding
-        ? isLoggedIn || isLoggedInAsGuest()
-            ? Routes.mainLayoutScreen
-            : Routes.loginScreen
-        : Routes.getStartRoute;
-  }
+  // static String initialRoute() {
+  //   return passedOnBoarding
+  //       ? isLoggedIn || isLoggedInAsGuest()
+  //           ? Routes.mainLayoutScreen
+  //           : Routes.loginScreen
+  //       : Routes.getStartRoute;
+  // }
 
   static void changeLanguageToEn() async {
     await CacheHelper.saveData(key: CacheKeys.currentLanguage, value: "en");
