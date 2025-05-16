@@ -65,7 +65,8 @@ class _InternetConnectionWidgetState extends State<InternetConnectionWidget> {
                     color: Colors.white,
                     width: MediaQuery.sizeOf(context).width,
                     child: TregoErrorWidget(
-                      asset: Assets.offlineFailureImage,
+                      asset: "",
+                      // asset: Assets.offlineFailureImage,
                       message: "No Internet Connection !".tr(),
                       secondaryWidget: Text16(
                         text: "The app will automatically be restored when you connect to the internet".tr(),

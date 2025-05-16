@@ -1,47 +1,42 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:graduation_project/core/cache_helper/cache_helper.dart';
 import 'package:graduation_project/core/constant.dart';
 import 'package:toastification/toastification.dart';
 
-import '../theming/assets.dart';
 import '../theming/colors.dart';
 import '../widgets/custom_texts.dart';
 
 class ToastManager {
   static void showInfoToast(String message, context, String description) {
-    toastification.dismissAll();
     toastification.show(
       context: context,
       type: ToastificationType.info,
       style: ToastificationStyle.flatColored,
       autoCloseDuration: const Duration(seconds: 3),
-      title: Text16(
+      title: Text12(
         text: message,
         textColor: Colors.white,
         weight: FontWeight.w700,
       ),
-      description: Text14(
+      description: Text10(
         text: description,
         textColor: Colors.white.withOpacity(0.8),
         weight: FontWeight.w600,
-        maxLines: 3,
       ),
-      icon: SvgPicture.asset(
-        Assets.infoIcon,
-        color: Colors.white,
-        height: 24.r,
-      ),
+      // icon: SvgPicture.asset(
+      //   Assets.infoIcon,
+      //   color: Colors.white,
+      //   width: 12,
+      // ),
       alignment: Alignment.topCenter,
       direction: CacheHelper.isEn ? TextDirection.ltr : TextDirection.rtl,
       animationDuration: const Duration(milliseconds: 500),
       primaryColor: Colors.white,
       backgroundColor: AppColors.orangeColor,
       foregroundColor: Colors.white,
-      padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 16.h),
-      margin: EdgeInsets.symmetric(horizontal: 30.w, vertical: 8.h),
-      borderRadius: BorderRadius.circular(8.r),
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 16),
+      margin: const EdgeInsets.symmetric(horizontal: 30, vertical: 8),
+      borderRadius: BorderRadius.circular(8),
       showProgressBar: false,
       closeButtonShowType: CloseButtonShowType.always,
       closeOnClick: true,
@@ -61,37 +56,35 @@ class ToastManager {
   }
 
   static void showWarningToast(String message, context, String description) {
-    toastification.dismissAll();
     toastification.show(
       context: context,
       type: ToastificationType.warning,
       style: ToastificationStyle.flatColored,
       autoCloseDuration: const Duration(seconds: 3),
-      title: Text16(
+      title: Text12(
         text: message,
         textColor: Colors.black87,
         weight: FontWeight.w500,
       ),
-      description: Text14(
+      description: Text10(
         text: description,
         textColor: Colors.black87,
         weight: FontWeight.w500,
-        maxLines: 3,
       ),
-      icon: SvgPicture.asset(
-        Assets.warningIcon,
-        color: Colors.black,
-        height: 24.r,
-      ),
+      // icon: SvgPicture.asset(
+      //   Assets.warningIcon,
+      //   color: Colors.black,
+      //   width: 12,
+      // ),
       alignment: Alignment.topCenter,
       direction: CacheHelper.isEn ? TextDirection.ltr : TextDirection.rtl,
       animationDuration: const Duration(milliseconds: 500),
       primaryColor: Colors.white,
       backgroundColor: AppColors.yellowColor,
       foregroundColor: Colors.black,
-      padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 16.h),
-      margin: EdgeInsets.symmetric(horizontal: 30.w, vertical: 8.h),
-      borderRadius: BorderRadius.circular(8.r),
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 16),
+      margin: const EdgeInsets.symmetric(horizontal: 30, vertical: 8),
+      borderRadius: BorderRadius.circular(8),
       showProgressBar: false,
       closeButtonShowType: CloseButtonShowType.always,
       closeOnClick: true,
@@ -111,42 +104,39 @@ class ToastManager {
   }
 
   static void showSuccessToast(String message, context, String description) {
-    toastification.dismissAll();
     toastification.show(
       context: context,
       type: ToastificationType.success,
       style: ToastificationStyle.flatColored,
       autoCloseDuration: const Duration(seconds: 3),
-      title: Text16(
+      title: Text12(
         text: message,
         textColor: Colors.white,
         weight: FontWeight.w600,
       ),
-      description: Text14(
+      description: Text10(
         text: description,
         textColor: Colors.white,
         weight: FontWeight.w500,
-        maxLines: 3,
       ),
-      icon: SvgPicture.asset(
-        Assets.checkIcon,
-        color: Colors.white,
-        height: 24.r,
-      ),
+      // icon: SvgPicture.asset(
+      //   Assets.checkIcon,
+      //   color: Colors.white,
+      //   width: 12,
+      // ),
       alignment: Alignment.topCenter,
       direction: CacheHelper.isEn ? TextDirection.ltr : TextDirection.rtl,
       animationDuration: const Duration(milliseconds: 500),
       primaryColor: Colors.white,
       backgroundColor: AppColors.purpleColor,
       foregroundColor: Colors.white,
-      padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 16.h),
-      margin: EdgeInsets.symmetric(horizontal: 30.w, vertical: 8.h),
-      borderRadius: BorderRadius.circular(8.r),
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 16),
+      margin: const EdgeInsets.symmetric(horizontal: 30, vertical: 8),
+      borderRadius: BorderRadius.circular(8),
       showProgressBar: false,
       closeButtonShowType: CloseButtonShowType.always,
       closeOnClick: true,
       pauseOnHover: true,
-      dragToClose: true,
       applyBlurEffect: false,
       callbacks: ToastificationCallbacks(
         onTap: (toastItem) => printDebug('Toast ${toastItem.id} tapped'),
@@ -161,37 +151,35 @@ class ToastManager {
   }
 
   static void showErrorToast(String title, context, String description) {
-    toastification.dismissAll();
     toastification.show(
       context: context,
       type: ToastificationType.success,
       style: ToastificationStyle.flatColored,
       autoCloseDuration: const Duration(seconds: 3),
-      title: Text16(
+      title: Text12(
         text: title,
         textColor: Colors.white,
-        weight: FontWeight.w600,
+        weight: FontWeight.w500,
       ),
-      description: Text14(
+      description: Text10(
         text: description,
         textColor: Colors.white70,
         weight: FontWeight.w500,
-        maxLines: 3,
       ),
-      icon: SvgPicture.asset(
-        Assets.removeIcon,
-        color: Colors.white,
-        height: 24.r,
-      ),
+      // icon: SvgPicture.asset(
+      //   Assets.exitIcon,
+      //   color: Colors.white,
+      //   width: 12,
+      // ),
       alignment: Alignment.topCenter,
       direction: CacheHelper.isEn ? TextDirection.ltr : TextDirection.rtl,
       animationDuration: const Duration(milliseconds: 500),
       primaryColor: Colors.white,
-      backgroundColor: AppColors.redColor,
+      backgroundColor: Colors.red,
       foregroundColor: Colors.black,
-      padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 16.h),
-      margin: EdgeInsets.symmetric(horizontal: 30.w, vertical: 8.h),
-      borderRadius: BorderRadius.circular(8.r),
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 16),
+      margin: const EdgeInsets.symmetric(horizontal: 30, vertical: 8),
+      borderRadius: BorderRadius.circular(8),
       showProgressBar: false,
       closeButtonShowType: CloseButtonShowType.always,
       closeOnClick: true,
@@ -210,34 +198,41 @@ class ToastManager {
     );
   }
 
-  static void wishListToastSuccess(
-    String title,
-    context,
-    String description, {
-    Color backgroundColor = AppColors.orangeColor,
-    AlignmentGeometry alignment = Alignment.bottomCenter,
+  static void showBottomSmallToastSuccess({
+    required context,
+    required String description,
+    Color? bgColor,
+    Color? textColor,
   }) {
-    toastification.dismissAll();
     toastification.show(
       context: context,
       type: ToastificationType.success,
       style: ToastificationStyle.flatColored,
       autoCloseDuration: const Duration(seconds: 3),
+      // title: Text16(
+      //   text: title,
+      //   textColor: Colors.white,
+      //   weight: FontWeight.w500,
+      // ),
       description: Text14(
         text: description,
-        textColor: Colors.white,
+        textColor: textColor ?? Colors.white,
         weight: FontWeight.w500,
-        maxLines: 3,
       ),
-      alignment: alignment,
+      // icon: SvgPicture.asset(
+      //   Assets.removeIcon,
+      //   color: Colors.white,
+      //   width: 24,
+      // ),
+      alignment: AlignmentDirectional.bottomEnd,
       direction: CacheHelper.isEn ? TextDirection.ltr : TextDirection.rtl,
       animationDuration: const Duration(milliseconds: 500),
       primaryColor: Colors.white,
-      backgroundColor: backgroundColor,
+      backgroundColor: bgColor ?? AppColors.orangeColor,
       foregroundColor: Colors.black,
-      padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 16.h),
-      margin: EdgeInsets.symmetric(horizontal: 30.w, vertical: 8.h),
-      borderRadius: BorderRadius.circular(8.r),
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 16),
+      margin: const EdgeInsets.symmetric(horizontal: 30, vertical: 8),
+      borderRadius: BorderRadius.circular(8),
       showProgressBar: true,
       closeButtonShowType: CloseButtonShowType.always,
       closeOnClick: true,

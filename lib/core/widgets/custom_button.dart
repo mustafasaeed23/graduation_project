@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import '../theming/colors.dart';
 import 'custom_texts.dart';
@@ -88,16 +89,29 @@ class _CustomButtonState extends State<CustomButton> {
         child: AnimatedContainer(
           duration: const Duration(milliseconds: 100),
           width: widget.width ?? MediaQuery.of(context).size.width * 0.9,
-          margin: EdgeInsets.symmetric(horizontal: _isPressed ? 2.w : 0, vertical: _isPressed ? 1.h : 0)
-              .add(widget.margin ?? EdgeInsets.zero),
+          margin: EdgeInsets.symmetric(
+            horizontal: _isPressed ? 2.w : 0,
+            vertical: _isPressed ? 1.h : 0,
+          ).add(widget.margin ?? EdgeInsets.zero),
           decoration: BoxDecoration(
-            gradient: widget.gradientColors != null
-                ? LinearGradient(colors: widget.gradientColors!, end: Alignment.bottomRight, begin: Alignment.topLeft)
-                : null,
+            gradient:
+                widget.gradientColors != null
+                    ? LinearGradient(
+                      colors: widget.gradientColors!,
+                      end: Alignment.bottomRight,
+                      begin: Alignment.topLeft,
+                    )
+                    : null,
             borderRadius: BorderRadius.circular(widget.borderRadius ?? 8.r),
-            border: Border.all(color: widget.borderSide?.color ?? Colors.transparent),
-            color: widget.disabled ? Colors.grey : widget.color ?? AppColors.purpleColor,
-            boxShadow: widget.boxShadow ??
+            border: Border.all(
+              color: widget.borderSide?.color ?? Colors.transparent,
+            ),
+            color:
+                widget.disabled
+                    ? Colors.grey
+                    : widget.color ?? AppColors.purpleColor,
+            boxShadow:
+                widget.boxShadow ??
                 [
                   BoxShadow(
                     color: Colors.grey.withOpacity(0.3),
@@ -106,20 +120,35 @@ class _CustomButtonState extends State<CustomButton> {
                   ),
                 ],
           ),
-          child: Center(
-            child: !widget.isIcon
-                ? Text20(
-                    text: widget.text,
-                    textColor: widget.textColor ?? Colors.white,
-                    size: _isPressed ? widget.fontSize ?? 20.r - 1.r : widget.fontSize,
-                    weight: widget.fontWeight,
-                  )
-                : SvgPicture.asset(
+          child:
+              widget.isIcon
+                  ? SvgPicture.asset(
                     widget.iconAsset!,
                     color: widget.iconColor,
                     width: widget.iconSize,
+                  )
+                  : Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(
+                        widget.text,
+                        style: GoogleFonts.poppins(
+                          color: widget.textColor ?? Colors.white,
+                          fontWeight: widget.fontWeight ?? FontWeight.w500,
+                          fontSize: widget.fontSize ?? 15.sp,
+                        ),
+                      ),
+                      if (widget.iconAsset != null) ...[
+                        SizedBox(width: 2.w),
+                        SvgPicture.asset(
+                          widget.iconAsset!,
+                          color: widget.iconColor,
+                          width: widget.iconSize,
+                        ),
+                      ],
+                    ],
                   ),
-          ),
         ),
       ),
     );

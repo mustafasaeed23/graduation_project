@@ -29,29 +29,29 @@ List<String> onboardingPagesDescriptions = [
   "Enjoy peace of mind with top-notch security and round-the-clock assistance for all your travel needs.",
   "Discover personalised travel guides, exclusive deals with top transport companies, and everything you need for a seamless journey."
 ];
-List<String> onboardingPagesImages = [
-  Assets.onboardingImage1,
-  Assets.onboardingImage2,
-  Assets.onboardingImage3,
-  Assets.onboardingImage4,
-];
+// List<String> onboardingPagesImages = [
+//   Assets.onboardingImage1,
+//   Assets.onboardingImage2,
+//   Assets.onboardingImage3,
+//   Assets.onboardingImage4,
+// ];
 
 /// <------------------------ NAV BAR CONSTANTS ------------------------->
 
-List<String> navBarIcons = [
-  Assets.homeIcon,
-  Assets.ticketIcon,
-  Assets.wishListIcon,
-  Assets.profileIcon
-];
+// List<String> navBarIcons = [
+//   Assets.homeIcon,
+//   Assets.ticketIcon,
+//   Assets.wishListIcon,
+//   Assets.profileIcon
+// ];
 
 /// <------------------------ HOME CONSTANTS ------------------------->
 
-List<String> howItWorksImages = [
-  Assets.searchImage,
-  Assets.compareImage,
-  Assets.bookImage,
-];
+// List<String> howItWorksImages = [
+//   Assets.searchImage,
+//   Assets.compareImage,
+//   Assets.bookImage,
+// ];
 
 List<String> howItWorksTitles = [
   "search",
@@ -70,13 +70,13 @@ List<Color> howItWorksColors = [
   AppColors.purpleColor,
 ];
 
-List<String> bookingPagesIcons = [
-  Assets.seatsIcon,
-  Assets.profileIcon,
-  Assets.policyAndInstructionsIcon,
-  Assets.tripSummaryIcon,
-  Assets.paymentIcon,
-];
+// List<String> bookingPagesIcons = [
+//   Assets.seatsIcon,
+//   Assets.profileIcon,
+//   Assets.policyAndInstructionsIcon,
+//   Assets.tripSummaryIcon,
+//   Assets.paymentIcon,
+// ];
 List<String> bookingPagesTitles = [
   "Seating",
   "Traveller Information",
@@ -92,13 +92,13 @@ List<String> accommodationsPagesTitles = [
   "Booking Summary",
   "Payment",
 ];
-List<String> accommodationsPageIcon = [
-  Assets.bedIcon,
-  Assets.profileIcon,
-  Assets.policyAndInstructionsIcon,
-  Assets.tripSummaryIcon,
-  Assets.paymentIcon,
-];
+// List<String> accommodationsPageIcon = [
+//   Assets.bedIcon,
+//   Assets.profileIcon,
+//   Assets.policyAndInstructionsIcon,
+//   Assets.tripSummaryIcon,
+//   Assets.paymentIcon,
+// ];
 void printLargeText(String text) {
   const int chunkSize = 800; // Adjust this size based on your needs
   int start = 0;

@@ -29,4 +29,10 @@ class AppColors {
   static const Color goldColor = Color(0xFFefbf04);
   static const Color silverColor = Color.fromARGB(255, 192, 192, 192);
   static const Color bronzeColor = Color.fromARGB(255, 205, 127, 50);
+  static const Color wamdahBackGround = Color(0xff0E343E);
+  static const Color wamdahSecoundPrimary = Color(0xff09444F);
+  static const Color wamdahGoldColor = Color(0xffD4AF3E);
+  static const Color wamdahGoldColor2 = Color(0xffFFB800);
+  static const Color bgColor = Color(0xff1F2228);
+  static const Color drawerBg = Color(0xff0D0D0D);
 }

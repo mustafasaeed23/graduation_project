@@ -7,19 +7,20 @@ import 'package:graduation_project/core/theming/colors.dart';
 import 'package:graduation_project/core/widgets/custom_texts.dart';
 
 class CustomDropDown extends StatefulWidget {
-  CustomDropDown(
-      {super.key,
-      required this.dropdownValue,
-      required this.options,
-      required this.hintText,
-      this.backgroundColor,
-      this.borderColor,
-      this.fontSize,
-      required this.onChanged,
-      this.height,
-      this.width,
-      this.fromFilteringTimes = false,
-      this.shadow});
+  CustomDropDown({
+    super.key,
+    required this.dropdownValue,
+    required this.options,
+    required this.hintText,
+    this.backgroundColor,
+    this.borderColor,
+    this.fontSize,
+    required this.onChanged,
+    this.height,
+    this.width,
+    this.fromFilteringTimes = false,
+    this.shadow,
+  });
   final Color? borderColor;
   dynamic dropdownValue;
   final List<dynamic> options;
@@ -42,7 +43,7 @@ class _CustomDropDownState extends State<CustomDropDown> {
     return Container(
       alignment: Alignment.center,
       height: widget.height,
-      width: widget.width,
+      // width: 550.w,
       decoration: BoxDecoration(
         color: widget.backgroundColor ?? Colors.white,
         borderRadius: BorderRadius.circular(15.h),
@@ -53,7 +54,10 @@ class _CustomDropDownState extends State<CustomDropDown> {
         boxShadow: widget.shadow != null ? [widget.shadow!] : [],
       ),
       child: DropdownButton<dynamic>(
-        padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: context.isDesktop || context.isTablet ? 15.h : 5.h),
+        padding: EdgeInsets.symmetric(
+          horizontal: 15.w,
+          vertical: context.isDesktop || context.isTablet ? 15.h : 5.h,
+        ),
         borderRadius: BorderRadius.circular(15.h),
         value: widget.dropdownValue,
         onChanged: (dynamic value) {
@@ -64,41 +68,51 @@ class _CustomDropDownState extends State<CustomDropDown> {
         },
         hint: Text16(
           text: widget.hintText.tr(),
-          textColor: Colors.black54,
+          textColor: AppColors.wamdahGoldColor,
           weight: FontWeight.w500,
-          size: widget.fontSize,
+          size: widget.fontSize ?? 12, // Smaller font size for the hint
         ),
+
         underline: const SizedBox(),
         isExpanded: true,
         dropdownColor: Colors.white,
-        icon: const Icon(Icons.keyboard_arrow_down, color: Colors.black),
+        icon: const Icon(
+          Icons.keyboard_arrow_down,
+          color: AppColors.wamdahGoldColor2,
+        ),
         selectedItemBuilder: (BuildContext context) {
           return widget.options.map((dynamic value) {
             return Align(
               alignment: AlignmentDirectional.centerStart,
               child: Text16(
-                text: widget.fromFilteringTimes
-                    ? "${CustomDateFormat.timeFormat12h(theTime: value.toString().split(' to ')[0], context: context)} ${"To".tr()} ${CustomDateFormat.timeFormat12h(theTime: value.toString().split(' to ')[1], context: context)}"
-                    : value.toString().tr(),
-                textColor: Colors.black,
+                text:
+                    widget.fromFilteringTimes
+                        ? "${CustomDateFormat.timeFormat12h(theTime: value.toString().split(' to ')[0], context: context)} ${"To".tr()} ${CustomDateFormat.timeFormat12h(theTime: value.toString().split(' to ')[1], context: context)}"
+                        : value.toString().tr(),
+                textColor: AppColors.wamdahGoldColor2,
                 weight: FontWeight.w500,
-                size: widget.fontSize,
+                size:
+                    widget.fontSize ??
+                    16, // Smaller font size for the selected item
               ),
             );
           }).toList();
         },
-        items: widget.options.map<DropdownMenuItem<dynamic>>((dynamic value) {
-          return DropdownMenuItem<dynamic>(
-            value: value,
-            child: Text16(
-              text: widget.fromFilteringTimes
-                  ? "${CustomDateFormat.timeFormat12h(theTime: value.toString().split(' to ')[0], context: context)} ${"To".tr()} ${CustomDateFormat.timeFormat12h(theTime: value.toString().split(' to ')[1], context: context)}"
-                  : value.toString().tr(),
-              textColor: Colors.black,
-              weight: FontWeight.w500,
-            ),
-          );
-        }).toList(),
+        items:
+            widget.options.map<DropdownMenuItem<dynamic>>((dynamic value) {
+              return DropdownMenuItem<dynamic>(
+                value: value,
+                child: Text16(
+                  text:
+                      widget.fromFilteringTimes
+                          ? "${CustomDateFormat.timeFormat12h(theTime: value.toString().split(' to ')[0], context: context)} ${"To".tr()} ${CustomDateFormat.timeFormat12h(theTime: value.toString().split(' to ')[1], context: context)}"
+                          : value.toString().tr(),
+                  textColor: Colors.black,
+                  weight: FontWeight.w500,
+                  size: widget.fontSize ?? 12, // Smaller font size for the item
+                ),
+              );
+            }).toList(),
       ),
     );
   }

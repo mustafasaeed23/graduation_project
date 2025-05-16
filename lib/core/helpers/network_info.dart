@@ -12,3 +12,8 @@ class NetworkInfoImpl implements NetworkInfo {
   @override
   Future<bool> get isConnected => _connectionChecker.hasConnection;
 }
+
+class WebNetworkInfo implements NetworkInfo {
+  @override
+  Future<bool> get isConnected async => true; // or use html APIs
+}
