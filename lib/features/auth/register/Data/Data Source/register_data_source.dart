@@ -1,5 +1,6 @@
 import 'package:graduation_project/core/Api/base_repo.dart';
 import 'package:graduation_project/core/Api/end_points.dart';
+import 'package:graduation_project/core/cache_helper/cache_helper.dart';
 import 'package:graduation_project/features/auth/register/Data/Models/register_model.dart';
 
 class RegisterDataSource extends BaseRepository {
@@ -23,7 +24,8 @@ class RegisterDataSource extends BaseRepository {
     if (tokens == null || tokens is! Map<String, dynamic>) {
       throw Exception("Invalid register response format");
     }
-
+    await CacheHelper.saveAccessToken(accessToken: tokens['accessToken']);
+    await CacheHelper.saveRefreshToken(refreshToken: tokens['refreshToken']);
     return RegisterModel.fromJson(tokens);
   }
 }

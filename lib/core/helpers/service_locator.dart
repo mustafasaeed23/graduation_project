@@ -9,6 +9,10 @@ import 'package:graduation_project/features/auth/register/Data/Data%20Source/reg
 import 'package:graduation_project/features/auth/register/Data/Repository/register_imply_repo.dart';
 import 'package:graduation_project/features/auth/register/Domain/Contract%20Repo/register_contract_repo.dart';
 import 'package:graduation_project/features/auth/register/Domain/Use%20Case/register_use_case.dart';
+import 'package:graduation_project/features/create%20videos/Data/Data%20Source/generate_video_data_source.dart';
+import 'package:graduation_project/features/create%20videos/Data/Repository/imply_repo.dart';
+import 'package:graduation_project/features/create%20videos/Domain/Contract%20Repo/generate_video_contract_repo.dart';
+import 'package:graduation_project/features/create%20videos/Domain/Use%20Cases/generate_viedo_use_case.dart';
 import 'package:graduation_project/features/dashboard/Data/Data%20Source/dashboard_data_source.dart';
 import 'package:graduation_project/features/dashboard/Data/repo/dashboard_imply_repo.dart';
 import 'package:graduation_project/features/dashboard/Domain/contract%20repo/dashboard_contract_repo.dart';
@@ -99,6 +103,19 @@ class ServicesLocator {
       () => DashboardInformationUseCase(
         dashboardContractRepo: getIt.get<DashboardContractRepo>(),
       ),
+    );
+
+    /// ===================================== generate instant ai video =============================================
+    getIt.registerLazySingleton<GenerateVideoDataSource>(
+      () => GenerateVideoDataSource(),
+    );
+    getIt.registerLazySingleton<GenerateVideoContractRepo>(
+      () => GenerateVideoImplyRepo(
+        dataSource: getIt.get<GenerateVideoDataSource>(),
+      ),
+    );
+    getIt.registerLazySingleton<GenerateViedoUseCase>(
+      () => GenerateViedoUseCase(repo: getIt.get<GenerateVideoContractRepo>()),
     );
   }
 }

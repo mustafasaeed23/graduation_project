@@ -4,9 +4,9 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:graduation_project/core/theming/colors.dart';
 
 class InputWidget extends StatelessWidget {
-  InputWidget({super.key, required this.text});
+  InputWidget({super.key, required this.text,  this.controller});
   final String text;
-  final TextEditingController controller = TextEditingController();
+  final TextEditingController? controller;
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +16,7 @@ class InputWidget extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-           text,
+            text,
             style: GoogleFonts.poppins(
               fontWeight: FontWeight.w600,
               color: AppColors.wamdahGoldColor2,
@@ -28,7 +28,7 @@ class InputWidget extends StatelessWidget {
             width: double.infinity,
             // height: 300,
             child: TextFormField(
-              maxLength: 5,
+              // maxLength: 5,
               maxLines: 5,
 
               textAlign: TextAlign.start,

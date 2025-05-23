@@ -177,16 +177,19 @@ class WamdahDio {
   }
 
   Future<Response> get({
-    required String endPoint,
-    data,
-    Map<String, dynamic>? additionalHeaders,
-  }) async {
-    dio.options.headers = {
-      authorization: "${await CacheHelper.getSecuredData(key: CacheKeys.accessToken)}",
-      ...?additionalHeaders,
-    };
-    return dio.get(endPoint, data: data);
-  }
+  required String endPoint,
+  Map<String, dynamic>? data,
+  Map<String, dynamic>? additionalHeaders,
+}) async {
+  dio.options.headers = {
+    authorization: "${await CacheHelper.getSecuredData(key: CacheKeys.accessToken)}",
+    ...?additionalHeaders,
+  };
+  return dio.get(
+    endPoint,
+    queryParameters: data,
+  );
+}
 
   Future<Response> post({
     required String endPoint,
