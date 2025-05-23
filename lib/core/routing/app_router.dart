@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:graduation_project/core/helpers/service_locator.dart';
 import 'package:graduation_project/features/Home/home_screen.dart';
+import 'package:graduation_project/features/ai%20avatar/Presentation/screens/ai_avatar_screen.dart';
 import 'package:graduation_project/features/auth/login/Domain/Use%20Cases/login_use_case.dart';
 import 'package:graduation_project/features/auth/login/Presentation/screens/login_screen.dart';
 import 'package:graduation_project/features/auth/login/cubit/login_cubit.dart';
@@ -9,8 +10,6 @@ import 'package:graduation_project/features/auth/register/Domain/Use%20Case/regi
 import 'package:graduation_project/features/auth/register/Presentation/cubit/register_cubit.dart';
 import 'package:graduation_project/features/auth/register/Presentation/screens/register_screen.dart';
 import 'package:graduation_project/features/core/Presentation/screens/core_screen.dart';
-import 'package:graduation_project/features/dashboard/Presentation/screens/dashboard_screen.dart';
-import 'package:graduation_project/features/dashboard/Presentation/screens/recent_video_details_screen.dart';
 import 'package:page_transition/page_transition.dart';
 
 import 'routes.dart';
@@ -42,6 +41,11 @@ class AppRouter {
       case Routes.corePage:
         return PageTransition(
           child: CoreScreen(),
+          type: PageTransitionType.fade,
+        );
+      case Routes.aiScreen:
+        return PageTransition(
+          child: AiAvatarScreen(),
           type: PageTransitionType.fade,
         );
 

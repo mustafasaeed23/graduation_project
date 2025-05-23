@@ -3,7 +3,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:graduation_project/core/theming/colors.dart';
 import 'package:graduation_project/core/widgets/custom_button.dart';
-import 'package:graduation_project/core/widgets/custom_drop_down.dart';
 import 'package:graduation_project/features/core/Presentation/widgets/step_widget.dart';
 import 'package:graduation_project/features/create%20videos/Presentation/widgets/input_widget.dart';
 import 'package:graduation_project/features/settings/Presentation/widgets/drop_down_widget.dart';
@@ -121,7 +120,7 @@ class _UrlVideoScreenState extends State<UrlVideoScreen> {
                       SizedBox(
                         height: 50.h, // Or whatever fits
                         child: CustomDropdown<String>(
-                          width: 500, // or double.infinity
+                          width: 300, // or double.infinity
                           items: ["English", "Arabic"],
                           value: languageOption,
                           onChanged: (val) {
@@ -150,7 +149,7 @@ class _UrlVideoScreenState extends State<UrlVideoScreen> {
                       SizedBox(
                         height: 50.h, // Or whatever fits
                         child: CustomDropdown<String>(
-                          width: 550, // or double.infinity
+                          // or double.infinity
                           items: ["Native", "Arabic"],
                           value: accentOption,
                           onChanged: (val) {

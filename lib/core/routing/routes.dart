@@ -5,4 +5,5 @@ class Routes {
   static const String homePage = "/homePage";
   // static const String dashBoardScreen = "/dashBoard"; 
   static const String recentVideoDetailsScreen = "/recentVideoDetailsScreen";
+  static const String aiScreen = "/aiScrees";
 }
