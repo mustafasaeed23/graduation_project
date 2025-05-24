@@ -9,6 +9,7 @@ import 'package:graduation_project/features/ai%20autopilot/presentation/screens/
 import 'package:graduation_project/features/ai%20avatar/Presentation/screens/ai_avatar_screen.dart';
 import 'package:graduation_project/features/create%20videos/Presentation/screens/create_video_screen.dart';
 import 'package:graduation_project/features/dashboard/Domain/usecases/dashboard_information_use_case.dart';
+import 'package:graduation_project/features/dashboard/Domain/usecases/get_all_videos_use_case.dart';
 import 'package:graduation_project/features/dashboard/Presentation/cubit/dashboard_cubit.dart';
 import 'package:graduation_project/features/dashboard/Presentation/screens/dashboard_screen.dart';
 import 'package:graduation_project/features/settings/Presentation/screens/settings_screen.dart';
@@ -16,7 +17,6 @@ import 'package:graduation_project/features/videos/url_video_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
-  
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -30,8 +30,11 @@ class _HomeScreenState extends State<HomeScreen> {
   final List<Widget> _screens = [
     BlocProvider(
       create:
-          (context) =>
-              DashboardCubit(useCase: getIt.get<DashboardInformationUseCase>())..getDashboardInformation(),
+          (context) => DashboardCubit(
+            useCase: getIt.get<DashboardInformationUseCase>(),
+            getAllVideosUseCase: getIt.get<GetAllVideosUseCase>(),
+          )..getDashboardInformation(),
+
       child: DashboardScreen(),
     ),
     CreateVideoScreen(),
@@ -118,7 +121,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       });
                     },
                   ),
-                    DrawerItemTile(
+                  DrawerItemTile(
                     title: 'Settings',
                     assetName: 'assets/icons/settings.svg',
                     isSelected: _selectedIndex == 4,
@@ -138,7 +141,6 @@ class _HomeScreenState extends State<HomeScreen> {
                       });
                     },
                   ),
-                
                 ],
               ),
             ),

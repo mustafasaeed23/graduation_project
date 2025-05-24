@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:graduation_project/core/helpers/extensions.dart';
+import 'package:graduation_project/core/routing/routes.dart';
 import 'package:graduation_project/core/theming/colors.dart';
 import 'package:graduation_project/features/dashboard/Domain/entities/user_data_entity.dart';
 import 'package:graduation_project/features/dashboard/Presentation/cubit/dashboard_cubit.dart';
@@ -96,12 +97,18 @@ class DashboardScreen extends StatelessWidget {
                           ),
                         ),
                         Spacer(),
-                        Text(
-                          "see all",
-                          style: GoogleFonts.poppins(
-                            color: Colors.grey,
-                            fontWeight: FontWeight.w500,
-                            fontSize: 15,
+                        InkWell(
+                          onTap: () {
+                            // context.pushNamed(Routes.allVideosScreen);
+                            // context.read<DashboardCubit>().getAllVideos();
+                          },
+                          child: Text(
+                            "see all",
+                            style: GoogleFonts.poppins(
+                              color: Colors.grey,
+                              fontWeight: FontWeight.w500,
+                              fontSize: 15,
+                            ),
                           ),
                         ),
                       ],
@@ -112,7 +119,7 @@ class DashboardScreen extends StatelessWidget {
                           child: Column(
                             mainAxisSize: MainAxisSize.max,
 
-                            crossAxisAlignment: CrossAxisAlignment.center,
+                            // crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               Lottie.asset(
                                 "assets/animations/Animation - 1747426014372.json",
@@ -158,7 +165,8 @@ class DashboardScreen extends StatelessWidget {
                                     );
                                   },
                                   child: RecentVideoContainer(
-                                    imagePath: video.thumbnailUrl,
+                                    videoUrl: video.videoSourceEntity.secureUrl,
+
                                     title: video.title,
                                     createdAt: video.createdAt
                                         .formatIsoStringToRelativeTime(context),

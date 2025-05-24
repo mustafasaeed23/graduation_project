@@ -20,7 +20,20 @@ class Customspokespersonwidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(borderRadius: BorderRadius.circular(16)),
+      padding: EdgeInsets.symmetric(horizontal: 10, vertical: 12),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(16),
+        // border: Border.all(color: Colors.white),
+        color: Colors.black,
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.shade800,
+            spreadRadius: 2,
+            blurRadius: 3,
+            offset: Offset(0, 2),
+          ),
+        ],
+      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -30,12 +43,17 @@ class Customspokespersonwidget extends StatelessWidget {
               child: Stack(
                 alignment: Alignment.topRight,
                 children: [
-                  Image.asset(imagePath,
+                  Image.asset(
+                    imagePath,
                     fit: BoxFit.fill,
                     width: 250,
                     height: 220,
                   ),
-                  Icon(Icons.favorite_border,size: 20,color: Color(0xffFFD700),)
+                  Icon(
+                    Icons.favorite_border,
+                    size: 20,
+                    color: Color(0xffFFD700),
+                  ),
                 ],
               ),
             ),
@@ -86,11 +104,11 @@ class Customspokespersonwidget extends StatelessWidget {
           SizedBox(height: 10.h),
           ElevatedButton(
             onPressed: () {},
-            child: Text("select", style: GoogleFonts.poppins(
-              color: Colors.black,
-              fontSize: 15
-            )),
             style: ElevatedButton.styleFrom(backgroundColor: Color(0xffFFD700)),
+            child: Text(
+              "select",
+              style: GoogleFonts.poppins(color: Colors.black, fontSize: 15),
+            ),
           ),
         ],
       ),

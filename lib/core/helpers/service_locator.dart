@@ -17,6 +17,7 @@ import 'package:graduation_project/features/dashboard/Data/Data%20Source/dashboa
 import 'package:graduation_project/features/dashboard/Data/repo/dashboard_imply_repo.dart';
 import 'package:graduation_project/features/dashboard/Domain/contract%20repo/dashboard_contract_repo.dart';
 import 'package:graduation_project/features/dashboard/Domain/usecases/dashboard_information_use_case.dart';
+import 'package:graduation_project/features/dashboard/Domain/usecases/get_all_videos_use_case.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -101,6 +102,13 @@ class ServicesLocator {
     // dashboard use case
     getIt.registerLazySingleton<DashboardInformationUseCase>(
       () => DashboardInformationUseCase(
+        dashboardContractRepo: getIt.get<DashboardContractRepo>(),
+      ),
+    );
+
+    // get all videos
+    getIt.registerLazySingleton<GetAllVideosUseCase>(
+      () => GetAllVideosUseCase(
         dashboardContractRepo: getIt.get<DashboardContractRepo>(),
       ),
     );

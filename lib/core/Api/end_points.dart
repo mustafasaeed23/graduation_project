@@ -10,4 +10,5 @@ class EndPoints {
   static const String userProfile = "user/profile";
   static const String purchaseCredits = "user/purchase-credits";
   static const String chnagePassword = "user/change-password";
+  static const String getUserAllVideos = "user/videos";
 }
