@@ -34,16 +34,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
           if (state is RegisterErrorState) {
             ToastManager.showBottomSmallToastSuccess(
               context: context,
-              description: "Failed to create account",
+              description: state.error,
               bgColor: Colors.red,
             );
           } else if (state is RegisterSuccessState) {
-            // ScaffoldMessenger.of(context).showSnackBar(
-            //   SnackBar(
-            //     content: Text("Registration Successful"),
-            //     backgroundColor: Colors.green,
-            //   ),
-            // );
             ToastManager.showBottomSmallToastSuccess(
               context: context,
               description: "Account Created Successfully",

@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:graduation_project/core/helpers/extensions.dart';
+import 'package:graduation_project/core/routing/routes.dart';
 import 'package:graduation_project/core/theming/colors.dart';
 import 'package:graduation_project/features/dashboard/Domain/entities/user_data_entity.dart';
 import 'package:graduation_project/features/dashboard/Presentation/cubit/dashboard_cubit.dart';
@@ -10,6 +11,7 @@ import 'package:graduation_project/features/dashboard/Presentation/cubit/dashboa
 import 'package:graduation_project/features/dashboard/Presentation/screens/recent_video_details_screen.dart';
 import 'package:graduation_project/features/dashboard/Presentation/widgets/recent_video_container.dart';
 import 'package:graduation_project/features/dashboard/Presentation/widgets/user_container_information.dart';
+import 'package:lottie/lottie.dart';
 
 class DashboardScreen extends StatelessWidget {
   const DashboardScreen({super.key});
@@ -95,59 +97,109 @@ class DashboardScreen extends StatelessWidget {
                           ),
                         ),
                         Spacer(),
-                        Text(
-                          "see all",
-                          style: GoogleFonts.poppins(
-                            color: Colors.grey,
-                            fontWeight: FontWeight.w500,
-                            fontSize: 15,
+                        InkWell(
+                          onTap: () {
+                            // context.pushNamed(Routes.allVideosScreen);
+                            // context.read<DashboardCubit>().getAllVideos();
+                          },
+                          child: Text(
+                            "see all",
+                            style: GoogleFonts.poppins(
+                              color: Colors.grey,
+                              fontWeight: FontWeight.w500,
+                              fontSize: 15,
+                            ),
                           ),
                         ),
                       ],
                     ),
                     SizedBox(height: 30.h),
-                    SingleChildScrollView(
-                      scrollDirection: Axis.horizontal,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: List.generate(user.videosEntity.length, (
-                          index,
-                        ) {
-                          final video = user.videosEntity[index];
-                          return Padding(
-                            padding: EdgeInsets.only(
-                              right: 10.w,
-                            ), // spacing between items
-                            child: GestureDetector(
-                              onTap: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder:
-                                        (context) => RecentVideoDetailsScreen(
-                                          video: user.videosEntity[index],
-                                        ),
-                                  ),
-                                );
-                               
-                              },
-                              child: RecentVideoContainer(
-                                imagePath: video.thumbnailUrl,
-                                title: video.title,
-                                createdAt: video.createdAt
-                                    .formatIsoStringToRelativeTime(context),
-                                duration: video.duration.toString(),
+                    user.videosEntity.isEmpty
+                        ? Center(
+                          child: Column(
+                            mainAxisSize: MainAxisSize.max,
+
+                            // crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Lottie.asset(
+                                "assets/animations/Animation - 1747426014372.json",
+                                width: 500,
+                                height: 500,
+                                fit: BoxFit.cover,
                               ),
-                            ),
-                          );
-                        }),
-                      ),
-                    ),
+                              Text(
+                                "No videos yet, Let's Create something Amazing",
+                                style: GoogleFonts.poppins(
+                                  color: Colors.white,
+                                  fontSize: 15,
+                                  height: 1.2,
+                                ),
+                              ),
+                            ],
+                          ),
+                        )
+                        : SingleChildScrollView(
+                          scrollDirection: Axis.horizontal,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: List.generate(user.videosEntity.length, (
+                              index,
+                            ) {
+                              final video = user.videosEntity[index];
+                              return Padding(
+                                padding: EdgeInsets.only(
+                                  right: 10.w,
+                                ), // spacing between items
+                                child: GestureDetector(
+                                  onTap: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder:
+                                            (context) =>
+                                                RecentVideoDetailsScreen(
+                                                  video:
+                                                      user.videosEntity[index],
+                                                ),
+                                      ),
+                                    );
+                                  },
+                                  child: RecentVideoContainer(
+                                    videoUrl: video.videoSourceEntity.secureUrl,
+
+                                    title: video.title,
+                                    createdAt: video.createdAt
+                                        .formatIsoStringToRelativeTime(context),
+                                    duration: video.duration.toString(),
+                                  ),
+                                ),
+                              );
+                            }),
+                          ),
+                        ),
                   ],
                 ),
               );
             } else {
-              return Container();
+              return Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Lottie.asset(
+                    "assets/animations/Animation - 1747426014372.json",
+                    width: 500,
+                    height: 500,
+                    fit: BoxFit.cover,
+                  ),
+                  SizedBox(height: 20.h),
+                  Text(
+                    "No videos yet, Let's Create something Amazing",
+                    style: GoogleFonts.poppins(
+                      color: Colors.white,
+                      fontSize: 18,
+                    ),
+                  ),
+                ],
+              );
             }
           },
         ),

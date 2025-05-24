@@ -4,7 +4,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:graduation_project/core/helpers/extensions.dart';
 import 'package:graduation_project/core/theming/colors.dart';
 import 'package:graduation_project/features/dashboard/Domain/entities/videos_entity.dart';
-import 'package:page_transition/page_transition.dart';
 import 'package:video_player/video_player.dart';
 
 class RecentVideoDetailsScreen extends StatefulWidget {
@@ -20,18 +19,25 @@ class RecentVideoDetailsScreen extends StatefulWidget {
 class _RecentVideoDetailsScreenState extends State<RecentVideoDetailsScreen> {
   late VideoPlayerController _controller;
   bool _isInitialized = false;
+  bool _isMuted = false;
+  bool _isBuffering = false;
+  bool _showControls = true;
 
   @override
   void initState() {
     super.initState();
-    _controller = VideoPlayerController.network(
-        widget.video.videoSourceEntity.secureUrl,
-      )
-      ..initialize().then((_) {
-        setState(() {
-          _isInitialized = true;
-        });
-      });
+    _controller =
+        VideoPlayerController.network(widget.video.videoSourceEntity.secureUrl)
+          ..initialize().then((_) {
+            setState(() {
+              _isInitialized = true;
+            });
+          })
+          ..addListener(() {
+            setState(() {
+              _isBuffering = _controller.value.isBuffering;
+            });
+          });
   }
 
   @override
@@ -40,12 +46,37 @@ class _RecentVideoDetailsScreenState extends State<RecentVideoDetailsScreen> {
     super.dispose();
   }
 
+  void _toggleControls() {
+    setState(() {
+      _showControls = !_showControls;
+    });
+  }
+
+  void _toggleVolume() {
+    setState(() {
+      _isMuted = !_isMuted;
+      _controller.setVolume(_isMuted ? 0 : 1);
+    });
+  }
+
+  void _togglePlayPause() {
+    setState(() {
+      _controller.value.isPlaying ? _controller.pause() : _controller.play();
+    });
+  }
+
+  void _toggleFullscreen() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (_) => FullscreenVideoPlayer(controller: _controller),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final video = widget.video;
-    final screenWidth = MediaQuery.of(context).size.width;
-    final videoWidth = screenWidth * 0.9; // 90% width
-    final videoHeight = videoWidth * 9 / 16; // 16:9 ratio
 
     return Scaffold(
       backgroundColor: Colors.black,
@@ -58,17 +89,17 @@ class _RecentVideoDetailsScreenState extends State<RecentVideoDetailsScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Image.asset("assets/images/logo2.png", height: 80),
-            SizedBox(width: 50.w),
-            Text(video.title, style: const TextStyle(color: Colors.white)),
-            SizedBox(width: 50.w),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20.0),
-              child: IconButton(
-                icon: const Icon(Icons.close),
-                onPressed: () {
-                  context.pop();
-                },
+            SizedBox(width: 30.w),
+            Expanded(
+              child: Text(
+                video.title,
+                style: const TextStyle(color: Colors.white),
+                overflow: TextOverflow.ellipsis,
               ),
+            ),
+            IconButton(
+              icon: const Icon(Icons.close),
+              onPressed: () => Navigator.pop(context),
             ),
           ],
         ),
@@ -84,69 +115,70 @@ class _RecentVideoDetailsScreenState extends State<RecentVideoDetailsScreen> {
                 height: 500,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(16),
-                  // color: Colors.black,
-                  // boxShadow: [
-                  //   BoxShadow(
-                  //     color: Colors.white.withOpacity(0.1),
-                  //     blurRadius: 10,
-                  //     spreadRadius: 1,
-                  //     offset: const Offset(0, 4),
-                  //   ),
-                  // ],
                 ),
                 clipBehavior: Clip.hardEdge,
                 child:
                     _isInitialized
-                        ? Stack(
-                          alignment: Alignment.center,
-                          children: [
-                            VideoPlayer(_controller),
-                            // Dark transparent overlay for better button visibility
-                            Container(color: Colors.black26),
-                            // Play/Pause button
-                            GestureDetector(
-                              onTap: () {
-                                setState(() {
-                                  _controller.value.isPlaying
-                                      ? _controller.pause()
-                                      : _controller.play();
-                                });
-                              },
-                              child: CircleAvatar(
-                                radius: 28,
-                                backgroundColor: Colors.white70,
-                                child: Icon(
-                                  _controller.value.isPlaying
-                                      ? Icons.pause
-                                      : Icons.play_arrow,
-                                  color: AppColors.wamdahGoldColor2,
-                                  size: 32,
+                        ? GestureDetector(
+                          onTap: _toggleControls,
+                          child: Stack(
+                            alignment: Alignment.center,
+                            children: [
+                              VideoPlayer(_controller),
+                              if (_isBuffering)
+                                const CircularProgressIndicator(
+                                  color: Colors.white,
                                 ),
-                              ),
-                            ),
-                            // Video progress indicator at the bottom
-                            Positioned(
-                              bottom: 0,
-                              left: 0,
-                              right: 0,
-                              child: VideoProgressIndicator(
-                                _controller,
-                                allowScrubbing: true,
-                                colors: VideoProgressColors(
-                                  playedColor: AppColors.wamdahGoldColor2,
-                                  bufferedColor: Colors.white30,
-                                  backgroundColor: Colors.white10,
+                              if (_showControls) ...[
+                                Container(color: Colors.black26),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    IconButton(
+                                      icon: Icon(
+                                        _controller.value.isPlaying
+                                            ? Icons.pause
+                                            : Icons.play_arrow,
+                                        size: 32,
+                                        color: AppColors.wamdahGoldColor2,
+                                      ),
+                                      onPressed: _togglePlayPause,
+                                    ),
+                                    IconButton(
+                                      icon: Icon(
+                                        _isMuted
+                                            ? Icons.volume_off
+                                            : Icons.volume_up,
+                                        size: 28,
+                                        color: Colors.white,
+                                      ),
+                                      onPressed: _toggleVolume,
+                                    ),
+                                  ],
                                 ),
-                              ),
-                            ),
-                          ],
+                                Positioned(
+                                  bottom: 0,
+                                  left: 0,
+                                  right: 0,
+                                  child: VideoProgressIndicator(
+                                    _controller,
+                                    allowScrubbing: true,
+                                    colors: VideoProgressColors(
+                                      playedColor: AppColors.wamdahGoldColor2,
+                                      bufferedColor: Colors.white30,
+                                      backgroundColor: Colors.white10,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ],
+                          ),
                         )
                         : const Center(
                           child: CircularProgressIndicator(color: Colors.white),
                         ),
               ),
               const SizedBox(height: 24),
-              // Video Details
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 24.0),
                 child: Center(
@@ -162,7 +194,6 @@ class _RecentVideoDetailsScreenState extends State<RecentVideoDetailsScreen> {
                         ),
                       ),
                       const SizedBox(height: 12),
-
                       SizedBox(
                         width: 500,
                         child: Column(
@@ -226,6 +257,38 @@ class _RecentVideoDetailsScreenState extends State<RecentVideoDetailsScreen> {
               const SizedBox(height: 40),
             ],
           ),
+        ),
+      ),
+    );
+  }
+}
+
+class FullscreenVideoPlayer extends StatelessWidget {
+  final VideoPlayerController controller;
+
+  const FullscreenVideoPlayer({super.key, required this.controller});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Colors.black,
+      body: Center(
+        child: Stack(
+          alignment: Alignment.center,
+          children: [
+            AspectRatio(
+              aspectRatio: controller.value.aspectRatio,
+              child: VideoPlayer(controller),
+            ),
+            Positioned(
+              top: 40,
+              left: 16,
+              child: IconButton(
+                icon: const Icon(Icons.close, color: Colors.white),
+                onPressed: () => Navigator.pop(context),
+              ),
+            ),
+          ],
         ),
       ),
     );
