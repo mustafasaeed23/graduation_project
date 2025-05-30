@@ -7,6 +7,10 @@ import 'package:graduation_project/core/theming/colors.dart';
 import 'package:graduation_project/features/Home/drawer_item_widget.dart';
 import 'package:graduation_project/features/ai%20autopilot/presentation/screens/ai_autopilot_screen.dart';
 import 'package:graduation_project/features/ai%20avatar/Presentation/screens/ai_avatar_screen.dart';
+import 'package:graduation_project/features/create%20videos/Domain/Use%20Cases/generate_script_use_case.dart';
+import 'package:graduation_project/features/create%20videos/Domain/Use%20Cases/generate_viedo_use_case.dart';
+import 'package:graduation_project/features/create%20videos/Domain/Use%20Cases/poll_video_status_use_case.dart';
+import 'package:graduation_project/features/create%20videos/Presentation/cubit/generate_video_cubit.dart';
 import 'package:graduation_project/features/create%20videos/Presentation/screens/create_video_screen.dart';
 import 'package:graduation_project/features/dashboard/Domain/usecases/dashboard_information_use_case.dart';
 import 'package:graduation_project/features/dashboard/Domain/usecases/get_all_videos_use_case.dart';
@@ -37,9 +41,18 @@ class _HomeScreenState extends State<HomeScreen> {
 
       child: DashboardScreen(),
     ),
-    CreateVideoScreen(),
-    UrlVideoScreen(),
+    BlocProvider(
+      create:
+          (context) => GenerateVideoCubit(
+            generateViedoUseCase: getIt.get<GenerateViedoUseCase>(),
+            generateScriptUseCase: getIt.get<GenerateScriptUseCase>(),
+            getVideoStatusUseCase: getIt.get<PollVideoStatusUseCase>(),
+          ),
+      child: CreateVideoScreen(),
+    ),
     AiAutopilotScreen(),
+    UrlVideoScreen(),
+
     SettingsScreen(),
     AiAvatarScreen(),
   ];
@@ -101,16 +114,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       });
                     },
                   ),
-                  DrawerItemTile(
-                    title: 'Ai Avatar',
-                    assetName: 'assets/icons/person-circle.svg',
-                    isSelected: _selectedIndex == 2,
-                    onTap: () {
-                      setState(() {
-                        _selectedIndex = 2;
-                      });
-                    },
-                  ),
+
                   DrawerItemTile(
                     title: 'Smart Url Video',
                     assetName: 'assets/icons/url_video.svg',
@@ -118,6 +122,16 @@ class _HomeScreenState extends State<HomeScreen> {
                     onTap: () {
                       setState(() {
                         _selectedIndex = 3;
+                      });
+                    },
+                  ),
+                  DrawerItemTile(
+                    title: 'Ai Avatar',
+                    assetName: 'assets/icons/person-circle.svg',
+                    isSelected: _selectedIndex == 2,
+                    onTap: () {
+                      setState(() {
+                        _selectedIndex = 2;
                       });
                     },
                   ),

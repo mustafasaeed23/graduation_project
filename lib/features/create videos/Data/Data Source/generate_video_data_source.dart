@@ -1,10 +1,63 @@
 import 'package:graduation_project/core/Api/base_repo.dart';
 import 'package:graduation_project/core/Api/end_points.dart';
-import 'package:graduation_project/features/create%20videos/Data/Models/create_video_model.dart';
+import 'package:graduation_project/features/create%20videos/Data/Models/generate_video_reposne.dart';
+import 'package:graduation_project/features/create%20videos/Data/Models/generate_script_model.dart';
+import 'package:graduation_project/features/create%20videos/Data/Models/generate_video_status_model.dart';
+import 'package:graduation_project/features/create%20videos/Domain/Entites/generate_video_status_entity.dart';
 
 class GenerateVideoDataSource extends BaseRepository {
-  Future<VideoDataModel> generateVideo({
-    required String promot,
+  Future<GenerateVideoResponse> generateVideo({
+    required String language,
+    required String accentOrDialect,
+    required String type,
+    required String generatedScript,
+    required String title,
+  }) async {
+    if (!await networkInfo.isConnected) {
+      throw Exception("No internet connection");
+    }
+
+    final response = await dio.post(
+      endPoint: EndPoints.generateVideo,
+      data: {
+        "generatedScript": generatedScript,
+        "title": title,
+        "language": language,
+        "accentOrDialect": accentOrDialect,
+        "type": type,
+      },
+    );
+
+    if (response.statusCode != 200 || !response.data.containsKey("jobId")) {
+      throw Exception(
+        "Generate Video failed: ${response.data["message"] ?? 'Unknown error'}",
+      );
+    }
+
+    return GenerateVideoResponse.fromJson(response.data);
+  }
+
+  Future<GenerateVideoStatusEntity> getGeneratedVideo(String jobId) async {
+    if (!await networkInfo.isConnected) {
+      throw Exception("No internet connection");
+    }
+
+    final response = await dio.get(
+      endPoint: EndPoints.getGeneratedVideo(jobId),
+    );
+
+    if (response.statusCode == 200) {
+      // Since GenerateVideoStatusModel extends GenerateVideoStatusEntity,
+      // you can return the model directly as an entity
+      return GenerateVideoStatusModel.fromJson(response.data);
+    } else {
+      throw Exception('Failed to get video status');
+    }
+  }
+
+  // generate script
+  Future<GenerateScriptModel> generateScript({
+    required String userPromot,
     required String language,
     required String accentOrDialect,
     required String type,
@@ -13,17 +66,17 @@ class GenerateVideoDataSource extends BaseRepository {
       throw Exception("No internet connection");
     }
     final response = await dio.post(
-      endPoint: EndPoints.generateVideo,
+      endPoint: EndPoints.generateScript,
       data: {
-        "promot": promot,
+        "userPromot": userPromot,
         "language": language,
         "accentOrDialect": accentOrDialect,
         "type": type,
       },
     );
     if (response.data["success"] != true) {
-      throw Exception("Generate Video failed: ${response.data["message"]}");
+      throw Exception("Generate Script failed: ${response.data["message"]}");
     }
-    return VideoDataModel.fromJson(response.data["data"]);
+    return GenerateScriptModel.fromJson(response.data["data"]);
   }
 }

@@ -68,9 +68,15 @@ class _UrlVideoScreenState extends State<UrlVideoScreen> {
               ],
             ),
             SizedBox(height: 10.h),
-            InputWidget(text: 'Input your URL',),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 50.0),
+              child: InputWidget(text: 'Input your URL'),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: 50.0,
+                vertical: 10,
+              ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -104,63 +110,67 @@ class _UrlVideoScreenState extends State<UrlVideoScreen> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-
-                    children: [
-                      Text(
-                        "Language",
-                        style: GoogleFonts.poppins(
-                          fontWeight: FontWeight.w600,
-                          color: AppColors.wamdahGoldColor2,
-                          fontSize: 15,
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "Language",
+                          style: GoogleFonts.poppins(
+                            fontWeight: FontWeight.w600,
+                            color: AppColors.wamdahGoldColor2,
+                            fontSize: 15,
+                          ),
                         ),
-                      ),
-                      SizedBox(height: 20),
-                      SizedBox(
-                        height: 50.h, // Or whatever fits
-                        child: CustomDropdown<String>(
-                          width: 300, // or double.infinity
-                          items: ["English", "Arabic"],
-                          value: languageOption,
-                          onChanged: (val) {
-                            setState(() {
-                              languageOption = val!;
-                            });
-                          },
-                          itemToString: (val) => val.toString(),
+                        SizedBox(height: 20),
+                        SizedBox(
+                          height: 50.h, // Or whatever fits
+                          child: CustomDropdown<String>(
+                            width: double.infinity, // or double.infinity
+                            items: ["English", "Arabic"],
+                            value: languageOption,
+                            onChanged: (val) {
+                              setState(() {
+                                languageOption = val!;
+                              });
+                            },
+                            itemToString: (val) => val.toString(),
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                   SizedBox(width: 20.w),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        "Accent",
-                        style: GoogleFonts.poppins(
-                          fontWeight: FontWeight.w600,
-                          color: AppColors.wamdahGoldColor2,
-                          fontSize: 15,
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "Accent",
+                          style: GoogleFonts.poppins(
+                            fontWeight: FontWeight.w600,
+                            color: AppColors.wamdahGoldColor2,
+                            fontSize: 15,
+                          ),
                         ),
-                      ),
-                      SizedBox(height: 20),
-                      SizedBox(
-                        height: 50.h, // Or whatever fits
-                        child: CustomDropdown<String>(
-                          // or double.infinity
-                          items: ["Native", "Arabic"],
-                          value: accentOption,
-                          onChanged: (val) {
-                            setState(() {
-                              accentOption = val!;
-                            });
-                          },
-                          itemToString: (val) => val.toString(),
+                        SizedBox(height: 20),
+                        SizedBox(
+                          height: 50.h, // Or whatever fits
+                          child: CustomDropdown<String>(
+                            width: double.infinity, // or double.infinity
+
+                            items: ["Native", "Arabic"],
+                            value: accentOption,
+                            onChanged: (val) {
+                              setState(() {
+                                accentOption = val!;
+                              });
+                            },
+                            itemToString: (val) => val.toString(),
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ],
               ),
