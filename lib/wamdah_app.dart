@@ -15,20 +15,6 @@ class WamdahWebSite extends StatefulWidget {
 }
 
 class _WamdahWebSiteState extends State<WamdahWebSite> {
-  // final AppPreferences _appPreferences = getIt.get<AppPreferences>();
-
-  //  @override
-  //   void didChangeDependencies() {
-  //     super.didChangeDependencies();
-  //     _appPreferences.getLocale().then(
-  //       (locale) {
-  //         if (mounted) {
-  //           context.setLocale(locale);
-  //         }
-  //       },
-  //     );
-  //   }
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
