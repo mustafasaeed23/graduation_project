@@ -62,26 +62,8 @@ class _AiAvatarScreenState extends State<AiAvatarScreen> {
                 ),
               ),
               SizedBox(height: 15.h),
-              Row(
-                children: [
-                  SizedBox(width: 1.w),
-                  Customspokespersonwidget(
-                    name: "Tech Expert Mike",
-                    position: "Technical Presenter",
-                    avatarJopTitle: "Technical",
-                    gender: "Female",
-                    imagePath: "assets/images/profile_image.png",
-                  ),
-                  SizedBox(width: 10.w),
-                  Customspokespersonwidget(
-                    name: "Tech Expert Mike",
-                    position: "Technical Presenter",
-                    avatarJopTitle: "Technical",
-                    gender: "Female",
-                    imagePath: "assets/images/profile_image.png",
-                  ),
-                ],
-              ),
+
+              CustomSpokesPersonWidget(),
               SizedBox(height: 30.h),
               Row(
                 // mainAxisAlignment: MainAxisAlignment.center,

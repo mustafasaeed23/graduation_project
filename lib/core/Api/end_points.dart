@@ -1,7 +1,7 @@
 class EndPoints {
   // static const String baseUrl = 'http://192.168.0.161';
   static const String baseUrl =
-      'https://antivirus-routes-cheque-stationery.trycloudflare.com/api/';
+      'https://witnesses-theorem-rooms-dealt.trycloudflare.com/api/';
   // :3020/
   static const String login = 'auth/signin';
   static const String register = 'auth/signup';
@@ -13,6 +13,7 @@ class EndPoints {
   static const String getUserAllVideos = "user/videos";
   static const String generateScript = "scripts/generate";
   static const String generateVideo = 'videos/generate';
+  static const String getAiAvtar = "aiAvatar/listing";
 
   static String getGeneratedVideo(String jobId) => 'renders/$jobId';
 }

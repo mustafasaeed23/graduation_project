@@ -1,56 +1,50 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:graduation_project/core/helpers/extensions.dart';
 import 'package:graduation_project/core/theming/colors.dart';
+import 'package:graduation_project/features/settings/Domain/entites/user_profile_entity.dart';
 
 class PurchaseWidget extends StatelessWidget {
-  const PurchaseWidget({super.key});
+  final PaymentEntity payment;
+
+  const PurchaseWidget({super.key, required this.payment});
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Text(
-          "Dec 15, 2024",
-          style: GoogleFonts.poppins(
-            fontWeight: FontWeight.w500,
-            fontSize: 13,
-            color: Colors.white,
-          ),
+    return ListTile(
+      title: Text(
+        "Credits: ${payment.credits}",
+        style: GoogleFonts.poppins(
+          fontWeight: FontWeight.w500,
+          color: Colors.white,
         ),
-        Text(
-          "50 Credits",
-          style: GoogleFonts.poppins(
-            fontWeight: FontWeight.w500,
-            fontSize: 13,
-            color: AppColors.wamdahGoldColor2,
+      ),
+      subtitle: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            "Provider: ${payment.paymentProvider}",
+            style: GoogleFonts.poppins(
+              fontWeight: FontWeight.w300,
+              color: Colors.white,
+            ),
           ),
-        ),
-        Text(
-          "100 EGP",
-          style: GoogleFonts.poppins(
-            fontWeight: FontWeight.w500,
-            fontSize: 13,
-            color: AppColors.wamdahGoldColor2,
+          Text(
+            "Date: ${payment.createdAtfinal.formatIsoStringToTime(context)}",
+            style: GoogleFonts.poppins(
+              fontWeight: FontWeight.w300,
+              color: AppColors.wamdahGoldColor2,
+            ),
           ),
+        ],
+      ),
+      trailing: Text(
+        "EGP ${payment.egpAmount}",
+        style: GoogleFonts.poppins(
+          fontWeight: FontWeight.w500,
+          color: AppColors.wamdahGoldColor2,
         ),
-        Text(
-          "PAY-1746620998480-WUIH8G",
-          style: GoogleFonts.poppins(
-            fontWeight: FontWeight.w500,
-            fontSize: 13,
-            color: AppColors.wamdahGoldColor2,
-          ),
-        ),
-        Text(
-          "Success",
-          style: GoogleFonts.poppins(
-            fontWeight: FontWeight.w500,
-            fontSize: 13,
-            color: Colors.white,
-          ),
-        ),
-      ],
+      ),
     );
   }
 }

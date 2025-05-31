@@ -6,6 +6,8 @@ import 'package:graduation_project/core/helpers/service_locator.dart';
 import 'package:graduation_project/core/theming/colors.dart';
 import 'package:graduation_project/features/Home/drawer_item_widget.dart';
 import 'package:graduation_project/features/ai%20autopilot/presentation/screens/ai_autopilot_screen.dart';
+import 'package:graduation_project/features/ai%20avatar/Domain/usecases/get_all_ai_avtars_use_case.dart';
+import 'package:graduation_project/features/ai%20avatar/Presentation/cubit/ai_avatar_cubit.dart';
 import 'package:graduation_project/features/ai%20avatar/Presentation/screens/ai_avatar_screen.dart';
 import 'package:graduation_project/features/create%20videos/Domain/Use%20Cases/generate_script_use_case.dart';
 import 'package:graduation_project/features/create%20videos/Domain/Use%20Cases/generate_viedo_use_case.dart';
@@ -16,8 +18,11 @@ import 'package:graduation_project/features/dashboard/Domain/usecases/dashboard_
 import 'package:graduation_project/features/dashboard/Domain/usecases/get_all_videos_use_case.dart';
 import 'package:graduation_project/features/dashboard/Presentation/cubit/dashboard_cubit.dart';
 import 'package:graduation_project/features/dashboard/Presentation/screens/dashboard_screen.dart';
+import 'package:graduation_project/features/settings/Domain/usecases/get_user_profile_use_case.dart';
+import 'package:graduation_project/features/settings/Presentation/cubit/settings_cubit.dart';
 import 'package:graduation_project/features/settings/Presentation/screens/settings_screen.dart';
 import 'package:graduation_project/features/videos/url_video_screen.dart';
+import 'package:http/http.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -44,17 +49,30 @@ class _HomeScreenState extends State<HomeScreen> {
     BlocProvider(
       create:
           (context) => GenerateVideoCubit(
-            generateViedoUseCase: getIt.get<GenerateViedoUseCase>(),
+            generateVideoUseCase: getIt.get<GenerateViedoUseCase>(),
             generateScriptUseCase: getIt.get<GenerateScriptUseCase>(),
-            getVideoStatusUseCase: getIt.get<PollVideoStatusUseCase>(),
+            pollVideoStatusUseCase: getIt.get<PollVideoStatusUseCase>(),
           ),
       child: CreateVideoScreen(),
     ),
-    AiAutopilotScreen(),
+    BlocProvider(
+      create:
+          (context) => AiAvatarCubit(
+            getAllAiAvtarsUseCase: getIt.get<GetAllAiAvtarsUseCase>(),
+          )..getAllAiAvtars(),
+      child: AiAvatarScreen(),
+    ),
+
     UrlVideoScreen(),
 
-    SettingsScreen(),
-    AiAvatarScreen(),
+    BlocProvider(
+      create:
+          (context) => SettingsCubit(
+            getUserProfileUseCase: getIt.get<GetUserProfileUseCase>(),
+          )..getUserProfile(),
+      child: SettingsScreen(),
+    ),
+    AiAutopilotScreen(),
   ];
 
   @override

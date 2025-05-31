@@ -7,32 +7,27 @@ import 'package:graduation_project/features/create%20videos/Domain/Entites/gener
 
 class PollVideoStatusUseCase {
   final GenerateVideoContractRepo repository;
-  final Duration pollInterval;
-  final Duration timeout;
 
-  PollVideoStatusUseCase({
-    required this.repository,
-    this.pollInterval = const Duration(seconds: 2),
-    this.timeout = const Duration(minutes: 1),
-  });
+  PollVideoStatusUseCase({required this.repository});
 
-  Future<Either<Failure, GenerateVideoStatusEntity>> execute(
-    String jobId,
-  ) async {
-    final endTime = DateTime.now().add(timeout);
-
-    while (DateTime.now().isBefore(endTime)) {
+  Future<Either<Failure, GenerateVideoStatusEntity>> call(
+    String jobId, {
+    int maxAttempts = 15,
+    Duration delay = const Duration(seconds: 2),
+  }) async {
+    for (int attempt = 0; attempt < maxAttempts; attempt++) {
       final result = await repository.getGeneratedVideo(jobId);
 
-      return result.fold((failure) => Left(failure), (statusEntity) async {
+      if (result.isRight()) {
+        final statusEntity = (result as Right).value;
         if (statusEntity.status == 'completed') {
-          return Right(statusEntity);
+          return Right(statusEntity); // ✅ FIXED
         }
-        await Future.delayed(pollInterval);
-        return await execute(jobId);
-      });
+      }
+
+      await Future.delayed(delay);
     }
 
-    throw TimeoutException('Video processing timed out');
+    return Left(TimeoutFailure());
   }
 }

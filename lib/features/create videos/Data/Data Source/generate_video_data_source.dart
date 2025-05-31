@@ -37,22 +37,16 @@ class GenerateVideoDataSource extends BaseRepository {
     return GenerateVideoResponse.fromJson(response.data);
   }
 
-  Future<GenerateVideoStatusEntity> getGeneratedVideo(String jobId) async {
-    if (!await networkInfo.isConnected) {
-      throw Exception("No internet connection");
-    }
-
+  Future<GenerateVideoStatusModel> getVideoStatus(String jobId) async {
     final response = await dio.get(
       endPoint: EndPoints.getGeneratedVideo(jobId),
     );
 
-    if (response.statusCode == 200) {
-      // Since GenerateVideoStatusModel extends GenerateVideoStatusEntity,
-      // you can return the model directly as an entity
-      return GenerateVideoStatusModel.fromJson(response.data);
-    } else {
-      throw Exception('Failed to get video status');
+    if (response.statusCode != 200 || !response.data.containsKey("status")) {
+      throw Exception(response.data["message"] ?? "Unknown error");
     }
+
+    return GenerateVideoStatusModel.fromJson(response.data);
   }
 
   // generate script
