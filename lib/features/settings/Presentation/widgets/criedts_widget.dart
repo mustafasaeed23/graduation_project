@@ -2,11 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:graduation_project/core/theming/colors.dart';
+import 'package:graduation_project/features/settings/Domain/entites/user_profile_entity.dart';
 import 'package:graduation_project/features/settings/Presentation/widgets/drop_down_widget.dart';
 import 'package:graduation_project/features/settings/Presentation/widgets/purchase_widget.dart';
 
 class CriedtsWidget extends StatefulWidget {
-  const CriedtsWidget({super.key});
+  final List<PaymentEntity> payments;
+
+  const CriedtsWidget({super.key, required this.payments});
 
   @override
   State<CriedtsWidget> createState() => _CriedtsWidgetState();
@@ -95,9 +98,7 @@ class _CriedtsWidgetState extends State<CriedtsWidget> {
                 ),
               ),
               SizedBox(height: 15.h),
-              PurchaseWidget(),
-              SizedBox(height: 20.h),
-              PurchaseWidget(),
+              ...widget.payments.map((payment) => PurchaseWidget(payment: payment)).toList(),
             ],
           ),
         ),

@@ -5,7 +5,13 @@ import 'package:graduation_project/core/theming/colors.dart';
 import 'package:graduation_project/core/widgets/custom_button.dart';
 
 class UserProfileWidget extends StatelessWidget {
-  const UserProfileWidget({super.key});
+  const UserProfileWidget({
+    super.key,
+    required this.userName,
+    required this.email,
+  });
+  final String userName;
+  final String email;
 
   @override
   Widget build(BuildContext context) {
@@ -67,7 +73,7 @@ class UserProfileWidget extends StatelessWidget {
                   color: Colors.black,
                 ),
                 child: Text(
-                  "Saleh",
+                  userName,
                   style: GoogleFonts.poppins(
                     fontSize: 12,
                     color: Colors.white,
@@ -95,7 +101,7 @@ class UserProfileWidget extends StatelessWidget {
                   color: Colors.black,
                 ),
                 child: Text(
-                  "Saleh@gmail.com",
+                  email,
                   style: GoogleFonts.poppins(
                     fontSize: 12,
                     color: Colors.white,

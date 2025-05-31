@@ -178,3 +178,102 @@ String formatMessagesDate(DateTime date,BuildContext context) {
     return CustomDateFormat.weekDayDayMonth(theTime: date.toString(),context:context );
   }
 }
+
+//  Future.delayed(Duration.zero, () {
+//                           showDialog(
+//                             context: context,
+//                             barrierDismissible: false,
+//                             builder:
+//                                 (context) => BlocBuilder<
+//                                   GenerateVideoCubit,
+//                                   GenerateVideoState
+//                                 >(
+//                                   builder: (context, state) {
+//                                     if (state is GenerateVideoStatusLoading ||
+//                                         state
+//                                             is GenerateVideoStatusInProgress) {
+//                                       return const AlertDialog(
+//                                         content: SizedBox(
+//                                           width: 300,
+//                                           height: 300,
+//                                           child: Center(
+//                                             child: CircularProgressIndicator(),
+//                                           ),
+//                                         ),
+//                                       );
+//                                     } else if (state
+//                                         is GenerateVideoStatusCompleted) {
+//                                       final videoUrl =
+//                                           state
+//                                               .videoStatus
+//                                               .video
+//                                               ?.videoSource
+//                                               .secureUrl;
+//                                       if (videoUrl != null) {
+//                                         return AlertDialog(
+//                                           content: SizedBox(
+//                                             width: 300,
+//                                             height: 300,
+//                                             child: VideoDialogContent(
+//                                               videoUrl: videoUrl,
+//                                             ),
+//                                           ),
+//                                           actions: [
+//                                             TextButton(
+//                                               onPressed:
+//                                                   () =>
+//                                                       Navigator.of(
+//                                                         context,
+//                                                       ).pop(),
+//                                               child: const Text("Close"),
+//                                             ),
+//                                           ],
+//                                         );
+//                                       } else {
+//                                         return const AlertDialog(
+//                                           title: Text("Error"),
+//                                           content: Text(
+//                                             "Video URL not available.",
+//                                           ),
+//                                         );
+//                                       }
+//                                     } else if (state
+//                                         is GenerateVideoStatusError) {
+//                                       return AlertDialog(
+//                                         title: const Text("Error"),
+//                                         content: Text(
+//                                           state.message ??
+//                                               "Unknown error occurred.",
+//                                         ),
+//                                         actions: [
+//                                           TextButton(
+//                                             onPressed:
+//                                                 () =>
+//                                                     Navigator.of(context).pop(),
+//                                             child: const Text("Close"),
+//                                           ),
+//                                         ],
+//                                       );
+//                                     } else if (state
+//                                         is GenerateVideoStatusTimeout) {
+//                                       return AlertDialog(
+//                                         title: const Text("Timeout"),
+//                                         content: const Text(
+//                                           "Video generation timed out. Please try again later.",
+//                                         ),
+//                                         actions: [
+//                                           TextButton(
+//                                             onPressed:
+//                                                 () =>
+//                                                     Navigator.of(context).pop(),
+//                                             child: const Text("Close"),
+//                                           ),
+//                                         ],
+//                                       );
+//                                     }
+
+//                                     return const SizedBox.shrink(); // No matching state
+//                                   },
+//                                 ),
+//                           );
+//                         });

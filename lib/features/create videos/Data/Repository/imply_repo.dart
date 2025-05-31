@@ -9,10 +9,11 @@ import 'package:graduation_project/features/create%20videos/Data/Models/generate
 import 'package:graduation_project/features/create%20videos/Domain/Contract%20Repo/generate_video_contract_repo.dart';
 import 'package:graduation_project/features/create%20videos/Domain/Entites/generate_video_status_entity.dart';
 
-class GenerateVideoImplyRepo implements GenerateVideoContractRepo {
+class GenerateVideoImplRepo implements GenerateVideoContractRepo {
   final GenerateVideoDataSource dataSource;
 
-  GenerateVideoImplyRepo({required this.dataSource});
+  GenerateVideoImplRepo({required this.dataSource});
+
   @override
   Future<Either<Failure, GenerateVideoResponse>> generateVideo({
     required String generatedScript,
@@ -37,7 +38,7 @@ class GenerateVideoImplyRepo implements GenerateVideoContractRepo {
     } catch (err) {
       printDebug(err);
       return const Left(
-        ServerFailure(message: "Something went wrong, please try again later"),
+        ServerFailure(message: 'Unexpected error occurred. Please try again.'),
       );
     }
   }
@@ -64,7 +65,7 @@ class GenerateVideoImplyRepo implements GenerateVideoContractRepo {
     } catch (err) {
       printDebug(err);
       return const Left(
-        ServerFailure(message: "Something went wrong, please try again later"),
+        ServerFailure(message: 'Unexpected error occurred. Please try again.'),
       );
     }
   }
@@ -74,7 +75,7 @@ class GenerateVideoImplyRepo implements GenerateVideoContractRepo {
     String jobID,
   ) async {
     try {
-      final result = await dataSource.getGeneratedVideo(jobID);
+      final result = await dataSource.getVideoStatus(jobID);
       return Right(result);
     } on ServerException catch (err) {
       return Left(ServerFailure(message: err.message));
@@ -83,7 +84,7 @@ class GenerateVideoImplyRepo implements GenerateVideoContractRepo {
     } catch (err) {
       printDebug(err);
       return const Left(
-        ServerFailure(message: "Something went wrong, please try again later"),
+        ServerFailure(message: 'Unexpected error occurred. Please try again.'),
       );
     }
   }

@@ -52,7 +52,7 @@ class TimeoutInterceptor extends Interceptor {
     if (timer != null && timer.isActive) {
       timer.cancel();
     }
-    hideLoading();
+    // hideLoading();
     super.onResponse(response, handler);
   }
 
@@ -64,7 +64,7 @@ class TimeoutInterceptor extends Interceptor {
     if (timer != null && timer.isActive) {
       timer.cancel();
     }
-    hideLoading();
+    // hideLoading();
     super.onError(err, handler);
   }
 }
@@ -153,6 +153,8 @@ class WamdahDio {
 
   Future<void> init() async {
     final baseOptions = BaseOptions(
+      // connectTimeout: const Duration(seconds: 60), // Still fine for connect
+      // receiveTimeout: const Duration(minutes: 10),
       baseUrl: EndPoints.baseUrl,
       receiveDataWhenStatusError: true,
       validateStatus: (_) => true,
@@ -169,27 +171,29 @@ class WamdahDio {
         ),
       TokenInterceptor(
         dio: dio,
-        accessToken: await CacheHelper.getSecuredData(key: CacheKeys.accessToken),
-        refreshToken: await CacheHelper.getSecuredData(key: CacheKeys.refreshToken),
+        accessToken: await CacheHelper.getSecuredData(
+          key: CacheKeys.accessToken,
+        ),
+        refreshToken: await CacheHelper.getSecuredData(
+          key: CacheKeys.refreshToken,
+        ),
       ),
       TimeoutInterceptor(),
     ]);
   }
 
   Future<Response> get({
-  required String endPoint,
-  Map<String, dynamic>? data,
-  Map<String, dynamic>? additionalHeaders,
-}) async {
-  dio.options.headers = {
-    authorization: "${await CacheHelper.getSecuredData(key: CacheKeys.accessToken)}",
-    ...?additionalHeaders,
-  };
-  return dio.get(
-    endPoint,
-    queryParameters: data,
-  );
-}
+    required String endPoint,
+    Map<String, dynamic>? data,
+    Map<String, dynamic>? additionalHeaders,
+  }) async {
+    dio.options.headers = {
+      authorization:
+          "${await CacheHelper.getSecuredData(key: CacheKeys.accessToken)}",
+      ...?additionalHeaders,
+    };
+    return dio.get(endPoint, queryParameters: data);
+  }
 
   Future<Response> post({
     required String endPoint,
@@ -197,7 +201,8 @@ class WamdahDio {
     Map<String, dynamic>? additionalHeaders,
   }) async {
     dio.options.headers = {
-      authorization: "${await CacheHelper.getSecuredData(key: CacheKeys.accessToken)}",
+      authorization:
+          "${await CacheHelper.getSecuredData(key: CacheKeys.accessToken)}",
       ...?additionalHeaders,
     };
     return dio.post(endPoint, data: data);
@@ -209,7 +214,8 @@ class WamdahDio {
     Map<String, dynamic>? additionalHeaders,
   }) async {
     dio.options.headers = {
-      authorization: "${await CacheHelper.getSecuredData(key: CacheKeys.accessToken)}",
+      authorization:
+          "${await CacheHelper.getSecuredData(key: CacheKeys.accessToken)}",
       ...?additionalHeaders,
     };
     return dio.put(endPoint, data: data);
@@ -221,7 +227,8 @@ class WamdahDio {
     Map<String, dynamic>? additionalHeaders,
   }) async {
     dio.options.headers = {
-      authorization: "${await CacheHelper.getSecuredData(key: CacheKeys.accessToken)}",
+      authorization:
+          "${await CacheHelper.getSecuredData(key: CacheKeys.accessToken)}",
       ...?additionalHeaders,
     };
     return dio.delete(endPoint, data: data);
@@ -233,7 +240,8 @@ class WamdahDio {
     Map<String, dynamic>? additionalHeaders,
   }) async {
     dio.options.headers = {
-      authorization: "${await CacheHelper.getSecuredData(key: CacheKeys.accessToken)}",
+      authorization:
+          "${await CacheHelper.getSecuredData(key: CacheKeys.accessToken)}",
       ...?additionalHeaders,
     };
     return dio.patch(endPoint, data: data);

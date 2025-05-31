@@ -6,9 +6,7 @@ import 'package:graduation_project/core/widgets/trego_loading_lottie.dart';
 
 import '../cache_helper/cache_helper.dart';
 
-void showLoading({
-  EasyLoadingMaskType maskType = EasyLoadingMaskType.black,
-}) {
+void showLoading({EasyLoadingMaskType maskType = EasyLoadingMaskType.black}) {
   EasyLoading.show(
     maskType: maskType,
     status: "Loading..".tr(),
@@ -38,48 +36,40 @@ void configLoading() {
     ..radius = 10.0
     ..userInteractions = false
     ..dismissOnTap = false
-    ..textStyle = CacheHelper.isEn
-        ? TextStyle(
-            fontFamily: "NeueHaas",
-            fontSize: 16.h,
-            fontWeight: FontWeight.w500,
-            color: Colors.black,
-          )
-        : TextStyle(
-            fontFamily: "Graphik",
-            fontSize: 16.h,
-            fontWeight: FontWeight.w500,
-            color: Colors.black,
-          );
+    ..textStyle =
+        CacheHelper.isEn
+            ? TextStyle(
+              fontFamily: "NeueHaas",
+              fontSize: 16.h,
+              fontWeight: FontWeight.w500,
+              color: Colors.black,
+            )
+            : TextStyle(
+              fontFamily: "Graphik",
+              fontSize: 16.h,
+              fontWeight: FontWeight.w500,
+              color: Colors.black,
+            );
 }
 
-void hideLoading() {
-  EasyLoading.dismiss();
-}
+// void hideLoading() {
+//   EasyLoading.dismiss();
+// }
 
 void showError(String message) {
   EasyLoading.dismiss();
 
-  EasyLoading.showError(
-    message,
-    dismissOnTap: true,
-  );
+  EasyLoading.showError(message, dismissOnTap: true);
 }
 
 void showSuccess(String message) {
   EasyLoading.dismiss();
 
-  EasyLoading.showSuccess(
-    message,
-    dismissOnTap: true,
-  );
+  EasyLoading.showSuccess(message, dismissOnTap: true);
 }
 
 void showInfo(String message) {
   EasyLoading.dismiss();
 
-  EasyLoading.showInfo(
-    message,
-    dismissOnTap: true,
-  );
+  EasyLoading.showInfo(message, dismissOnTap: true);
 }

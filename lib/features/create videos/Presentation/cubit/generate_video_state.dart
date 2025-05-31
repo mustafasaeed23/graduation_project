@@ -1,4 +1,3 @@
-import 'package:graduation_project/features/create%20videos/Data/Models/generate_video_reposne.dart';
 import 'package:graduation_project/features/create%20videos/Domain/Entites/generate_script_entity.dart';
 import 'package:graduation_project/features/create%20videos/Domain/Entites/generate_video_entity.dart';
 import 'package:graduation_project/features/create%20videos/Domain/Entites/generate_video_status_entity.dart';
@@ -15,24 +14,26 @@ class GenerateVideoSuccess extends GenerateVideoState {
 }
 
 class GenerateVideoError extends GenerateVideoState {
-  final String error;
-  GenerateVideoError({required this.error});
+  final String message;
+  GenerateVideoError({required this.message});
 }
 
 /// Generate script states
+class GenerateScriptLoading extends GenerateVideoState {}
+
 class GenerateScriptSuccess extends GenerateVideoState {
   final GenerateScriptEntity script;
   GenerateScriptSuccess({required this.script});
 }
 
 class GenerateScriptError extends GenerateVideoState {
-  final String error;
-  GenerateScriptError({required this.error});
+  final String message;
+  GenerateScriptError({required this.message});
 }
 
-class GenerateScriptLoading extends GenerateVideoState {}
+/// Video status polling states
+class GenerateVideoStatusInitial extends GenerateVideoState {}
 
-/// New: Video status checking states (for polling video generation status)
 class GenerateVideoStatusLoading extends GenerateVideoState {}
 
 class GenerateVideoStatusInProgress extends GenerateVideoState {
@@ -46,10 +47,8 @@ class GenerateVideoStatusCompleted extends GenerateVideoState {
 }
 
 class GenerateVideoStatusError extends GenerateVideoState {
-  final String error;
-  GenerateVideoStatusError({required this.error});
+  final String message;
+  GenerateVideoStatusError({required this.message});
 }
 
 class GenerateVideoStatusTimeout extends GenerateVideoState {}
-
-class GenerateVideoStatusInitial extends GenerateVideoState {}
