@@ -31,7 +31,7 @@ class CreateVideoScreen extends StatefulWidget {
 }
 
 class _CreateVideoScreenState extends State<CreateVideoScreen> {
-  String selectedOption = "Motivational";
+  String selectedOption = "Educational";
   String languageOption = "Arabic";
   String accentOption = "Egyptian";
   final TextEditingController promptController = TextEditingController();
@@ -197,7 +197,7 @@ class _CreateVideoScreenState extends State<CreateVideoScreen> {
                       SizedBox(height: 15.h),
                       CustomDropdown<String>(
                         width: double.infinity,
-                        items: ["Motivational", "Tech", "Educational"],
+                        items: ["Educational", "Tech", "Tourism", "Nutrition"],
                         value: selectedOption,
                         onChanged: (val) {
                           if (val != null) {
@@ -269,7 +269,6 @@ class _CreateVideoScreenState extends State<CreateVideoScreen> {
                                 width: double.infinity,
                                 items: [
                                   "Egyptian",
-                                  "Syrian",
                                   "American",
                                   "British",
                                 ],

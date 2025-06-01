@@ -53,5 +53,6 @@ class VideoStatusLoadingWithProgress extends VideoState {
   VideoStatusLoadingWithProgress({required this.progressCount});
 
   @override
-  String toString() => 'VideoStatusLoadingWithProgress { progressCount: $progressCount }';
+  String toString() =>
+      'VideoStatusLoadingWithProgress { progressCount: $progressCount }';
 }
