@@ -6,7 +6,9 @@ import 'package:graduation_project/core/helpers/service_locator.dart';
 import 'package:graduation_project/core/theming/colors.dart';
 import 'package:graduation_project/features/Home/drawer_item_widget.dart';
 import 'package:graduation_project/features/ai%20autopilot/presentation/screens/ai_autopilot_screen.dart';
+import 'package:graduation_project/features/ai%20avatar/Domain/usecases/generate_ai_avtar_video_use_case.dart';
 import 'package:graduation_project/features/ai%20avatar/Domain/usecases/get_all_ai_avtars_use_case.dart';
+import 'package:graduation_project/features/ai%20avatar/Presentation/bloc/generate_ai_avatar_videos_bloc.dart';
 import 'package:graduation_project/features/ai%20avatar/Presentation/cubit/ai_avatar_cubit.dart';
 import 'package:graduation_project/features/ai%20avatar/Presentation/screens/ai_avatar_screen.dart';
 import 'package:graduation_project/features/create%20videos/Domain/Use%20Cases/generate_script_use_case.dart';
@@ -57,11 +59,18 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
       child: CreateVideoScreen(),
     ),
-    BlocProvider(
-      create:
-          (context) => AiAvatarCubit(
-            getAllAiAvtarsUseCase: getIt.get<GetAllAiAvtarsUseCase>(),
-          )..getAllAiAvtars(),
+    MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create:
+              (context) => AiAvatarCubit(
+                getAllAiAvtarsUseCase: getIt.get<GetAllAiAvtarsUseCase>(),
+              )..getAllAiAvtars(),
+        ),
+        BlocProvider(create: (context) => GenerateAiAvatarVideosBloc(
+          useCases: getIt.get<GenerateAiAvtarVideoUseCase>()
+        )),
+      ],
       child: AiAvatarScreen(),
     ),
 

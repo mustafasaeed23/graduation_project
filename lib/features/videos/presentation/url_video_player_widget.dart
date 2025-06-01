@@ -43,7 +43,7 @@ class _UrlVideoPlayerWidgetState extends State<UrlVideoPlayerWidget> {
         width: MediaQuery.of(context).size.width * 0.9, // 90% of screen width
         height:
             (MediaQuery.of(context).size.width * 0.9) *
-            0.1, // maintain 16:9 ratio
+            0.4, // maintain 16:9 ratio
         decoration: BoxDecoration(
           color: Colors.black,
           borderRadius: BorderRadius.circular(8),

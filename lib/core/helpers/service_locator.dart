@@ -4,6 +4,7 @@ import 'package:graduation_project/core/Api/wamdah_dio.dart';
 import 'package:graduation_project/features/ai%20avatar/Data/datasources/ai_avatar_data_source.dart';
 import 'package:graduation_project/features/ai%20avatar/Data/repositories/ai_avatar_imply_repo.dart';
 import 'package:graduation_project/features/ai%20avatar/Domain/repositories/ai_avatar_contract_repo.dart';
+import 'package:graduation_project/features/ai%20avatar/Domain/usecases/generate_ai_avtar_video_use_case.dart';
 import 'package:graduation_project/features/ai%20avatar/Domain/usecases/get_all_ai_avtars_use_case.dart';
 import 'package:graduation_project/features/auth/login/Data/Data%20Source/login_data_source.dart';
 import 'package:graduation_project/features/auth/login/Data/Repository/login_imply_repo.dart';
@@ -170,6 +171,11 @@ class ServicesLocator {
     );
     getIt.registerLazySingleton<GetAllAiAvtarsUseCase>(
       () => GetAllAiAvtarsUseCase(
+        aiAvatarContractRepo: getIt.get<AiAvatarContractRepo>(),
+      ),
+    );
+    getIt.registerLazySingleton<GenerateAiAvtarVideoUseCase>(
+      () => GenerateAiAvtarVideoUseCase(
         aiAvatarContractRepo: getIt.get<AiAvatarContractRepo>(),
       ),
     );

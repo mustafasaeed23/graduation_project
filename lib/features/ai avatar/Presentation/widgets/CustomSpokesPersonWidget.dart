@@ -7,13 +7,9 @@ import 'package:graduation_project/features/ai%20avatar/Presentation/cubit/ai_av
 import 'package:graduation_project/features/ai%20avatar/Presentation/cubit/ai_avatar_state.dart';
 
 class CustomSpokesPersonWidget extends StatelessWidget {
-  // String imagePath;
-  // String name;
-  // String position;
-  // String avatarJopTitle;
-  // String gender;
+  final void Function(String selectedSpeakerName) onSpeakerSelected;
 
-  CustomSpokesPersonWidget({super.key});
+  const CustomSpokesPersonWidget({super.key, required this.onSpeakerSelected});
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +26,7 @@ class CustomSpokesPersonWidget extends StatelessWidget {
             padding: EdgeInsets.symmetric(horizontal: 20),
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 3,
-              childAspectRatio: 1,
+              childAspectRatio: 0.8,
               crossAxisSpacing: 10,
               mainAxisSpacing: 10,
             ),
@@ -107,7 +103,9 @@ class CustomSpokesPersonWidget extends StatelessWidget {
                     ),
                     SizedBox(height: 10.h),
                     ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        onSpeakerSelected(item.avatarName);
+                      },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Color(0xffFFD700),
                       ),

@@ -154,7 +154,7 @@ class _UrlVideoScreenState extends State<UrlVideoScreen> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Text(
-                                "Generating video... ${state.progressCount * 100}%",
+                                "Generating video... ${state.progressCount}%",
                                 style: TextStyle(color: Colors.black),
                               ),
                               SizedBox(height: 10),
@@ -169,15 +169,6 @@ class _UrlVideoScreenState extends State<UrlVideoScreen> {
                         );
                       } else if (state is VideoStatusLoaded) {
                         final videoUrl = state.video.videoUrl;
-
-                        // Future<void> _openUrl(String url) async {
-                        //   if (await canLaunch(url)) {
-                        //     await launch(url);
-                        //   } else {
-                        //     // Handle error here, e.g. show a snackbar
-                        //     print("Could not launch $url");
-                        //   }
-                        // }
 
                         return Padding(
                           padding: const EdgeInsets.symmetric(vertical: 16),
