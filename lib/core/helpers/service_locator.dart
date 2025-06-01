@@ -28,6 +28,10 @@ import 'package:graduation_project/features/settings/Data/datasources/user_profi
 import 'package:graduation_project/features/settings/Data/repositories/imply_repo.dart';
 import 'package:graduation_project/features/settings/Domain/repositories/profile_contract_repo.dart';
 import 'package:graduation_project/features/settings/Domain/usecases/get_user_profile_use_case.dart';
+import 'package:graduation_project/features/videos/data/datasources/url_video_data_source.dart';
+import 'package:graduation_project/features/videos/data/repositories/url_video_imply_repo.dart';
+import 'package:graduation_project/features/videos/domain/repositories/generate_url_videos_contract_repo.dart';
+import 'package:graduation_project/features/videos/domain/usecases/generate_url_video_use_cases.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -169,5 +173,10 @@ class ServicesLocator {
         aiAvatarContractRepo: getIt.get<AiAvatarContractRepo>(),
       ),
     );
+
+    /// =========================================generate url video===============================
+    getIt.registerLazySingleton<UrlVideoDataSource>(() => UrlVideoDataSource());
+    getIt.registerLazySingleton<GenerateUrlVideoRepository>(()=> UrlVideoImplyRepo(dataSource : getIt.get<UrlVideoDataSource>()));
+    getIt.registerLazySingleton<VideoUseCase>(() => VideoUseCase(repository: getIt.get<GenerateUrlVideoRepository>()));
   }
 }

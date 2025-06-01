@@ -14,6 +14,8 @@ class EndPoints {
   static const String generateScript = "scripts/generate";
   static const String generateVideo = 'videos/generate';
   static const String getAiAvtar = "aiAvatar/listing";
+  static const String generateUrlVideo = "videos/generate-ad";
+  static const String generateScriptAd = "scripts/generate-ad-script";
 
   static String getGeneratedVideo(String jobId) => 'renders/$jobId';
 }
