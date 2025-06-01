@@ -21,6 +21,8 @@ import 'package:graduation_project/features/dashboard/Presentation/screens/dashb
 import 'package:graduation_project/features/settings/Domain/usecases/get_user_profile_use_case.dart';
 import 'package:graduation_project/features/settings/Presentation/cubit/settings_cubit.dart';
 import 'package:graduation_project/features/settings/Presentation/screens/settings_screen.dart';
+import 'package:graduation_project/features/videos/domain/usecases/generate_url_video_use_cases.dart';
+import 'package:graduation_project/features/videos/presentation/bloc/generate_url_video_bloc.dart';
 import 'package:graduation_project/features/videos/url_video_screen.dart';
 import 'package:http/http.dart';
 
@@ -63,7 +65,10 @@ class _HomeScreenState extends State<HomeScreen> {
       child: AiAvatarScreen(),
     ),
 
-    UrlVideoScreen(),
+    BlocProvider(
+      create: (context) => VideoBloc(useCase: getIt.get<VideoUseCase>()),
+      child: UrlVideoScreen(),
+    ),
 
     BlocProvider(
       create:
