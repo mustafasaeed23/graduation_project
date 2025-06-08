@@ -14,6 +14,7 @@ import 'package:graduation_project/features/dashboard/Domain/usecases/dashboard_
 import 'package:graduation_project/features/dashboard/Domain/usecases/get_all_videos_use_case.dart';
 import 'package:graduation_project/features/dashboard/Presentation/cubit/dashboard_cubit.dart';
 import 'package:graduation_project/features/dashboard/Presentation/screens/all_videos_screen.dart';
+import 'package:graduation_project/mobile/splash_screen.dart';
 import 'package:page_transition/page_transition.dart';
 
 import 'routes.dart';
@@ -58,28 +59,13 @@ class AppRouter {
           child: HomeScreen(),
           type: PageTransitionType.fade,
         );
-      // case Routes.recentVideoDetailsScreen:
-      //   return PageTransition(
-      //     child: RecentVideoDetailsScreen(video: ,),
-      //     type: PageTransitionType.fade,
-      //   );
-      // case Routes.dashBoardScreen:
-      // return PageTransition(
-      //   child: DashboardScreen(),
-      //   type: PageTransitionType.fade,
-      // );
-      // case Routes.allVideosScreen:
-      //   return PageTransition(
-      //     child: BlocProvider(
-      //       create:
-      //           (context) => DashboardCubit(
-      //             getAllVideosUseCase: getIt.get<GetAllVideosUseCase>(),
-      //             useCase: getIt.get<DashboardInformationUseCase>(),
-      //           )..getAllVideos(),
-      //       child: AllVideosScreen(),
-      //     ),
-      //     type: PageTransitionType.fade,
-      //   );
+
+      ///==================mobile====================
+      case Routes.splashScreen:
+        return PageTransition(
+          child: SplashScreen(),
+          type: PageTransitionType.fade,
+        );
 
       default:
         return PageTransition(

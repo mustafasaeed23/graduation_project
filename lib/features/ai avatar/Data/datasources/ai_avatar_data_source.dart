@@ -54,7 +54,7 @@ class AiAvatarDataSource extends BaseRepository {
     required String generatedScript,
     required String language,
     required String accentOrDialect,
-    required String speacker,
+    required String speaker,
     required String type,
   }) async {
     try {
@@ -65,7 +65,7 @@ class AiAvatarDataSource extends BaseRepository {
           "generatedScript": generatedScript,
           "language": language,
           "accentOrDialect": accentOrDialect,
-          "speacker": speacker,
+          "speaker": speaker,
           "type": type,
         },
       );

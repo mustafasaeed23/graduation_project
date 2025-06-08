@@ -19,7 +19,7 @@ class GenerateVideoEvent extends GenerateAiAvatarVideosEvent {
   final String generatedScript;
   final String language;
   final String accentOrDialect;
-  final String speacker;
+  final String speaker;
   final String type;
 
   GenerateVideoEvent({
@@ -27,7 +27,7 @@ class GenerateVideoEvent extends GenerateAiAvatarVideosEvent {
     required this.generatedScript,
     required this.language,
     required this.accentOrDialect,
-    required this.speacker,
+    required this.speaker,
     required this.type,
   });
 }

@@ -52,12 +52,12 @@ class AiAvatarImplyRepo implements AiAvatarContractRepo {
     required String generatedScript,
     required String language,
     required String accentOrDialect,
-    required String speacker,
+    required String speaker,
     required String type,
   }) async {
     return await dataSource.generateAiAvtarVideo(
       type: type,
-      speacker: speacker,
+      speaker: speaker,
       title: title,
       generatedScript: generatedScript,
       language: language,

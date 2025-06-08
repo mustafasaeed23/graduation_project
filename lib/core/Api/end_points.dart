@@ -1,7 +1,7 @@
 class EndPoints {
   // static const String baseUrl = 'http://192.168.0.161';
   static const String baseUrl =
-      'https://steps-mailman-set-virginia.trycloudflare.com/api/';
+      'https://known-richard-fri-play.trycloudflare.com/api/';
   // :3020/
   static const String login = 'auth/signin';
   static const String register = 'auth/signup';
