@@ -10,4 +10,6 @@ class Routes {
   static const String allVideosScreen = "/allVideosScreen";
   //====================mobile=====================
   static const String splashScreen = "/splashScreen";
+  static const String onboardingScreen = "/onboardingScreen";
+  static const String layoutScreen = "/layoutScreen";
 }

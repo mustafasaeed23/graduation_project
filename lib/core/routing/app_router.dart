@@ -14,6 +14,8 @@ import 'package:graduation_project/features/dashboard/Domain/usecases/dashboard_
 import 'package:graduation_project/features/dashboard/Domain/usecases/get_all_videos_use_case.dart';
 import 'package:graduation_project/features/dashboard/Presentation/cubit/dashboard_cubit.dart';
 import 'package:graduation_project/features/dashboard/Presentation/screens/all_videos_screen.dart';
+import 'package:graduation_project/mobile/layout/layout_screen.dart';
+import 'package:graduation_project/mobile/onboarding_screen.dart';
 import 'package:graduation_project/mobile/splash_screen.dart';
 import 'package:page_transition/page_transition.dart';
 
@@ -64,6 +66,16 @@ class AppRouter {
       case Routes.splashScreen:
         return PageTransition(
           child: SplashScreen(),
+          type: PageTransitionType.fade,
+        );
+      case Routes.onboardingScreen:
+        return PageTransition(
+          child: OnboardingScreen(),
+          type: PageTransitionType.fade,
+        );
+        case Routes.layoutScreen:
+        return PageTransition(
+          child: MainLayoutScreen(),
           type: PageTransitionType.fade,
         );
 
