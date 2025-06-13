@@ -19,7 +19,7 @@ abstract class AiAvatarContractRepo {
     required String generatedScript,
     required String language,
     required String accentOrDialect,
-    required String speacker,
+    required String speaker,
     required String type,
   });
   Future<UrlVideoEntity> checkVideoStatus(String jobId);

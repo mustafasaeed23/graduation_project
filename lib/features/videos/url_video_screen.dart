@@ -12,6 +12,7 @@ import 'package:graduation_project/features/videos/presentation/bloc/generate_ur
 import 'package:graduation_project/features/videos/presentation/bloc/generate_url_video_state.dart';
 import 'package:graduation_project/features/videos/presentation/url_video_player_widget.dart';
 import 'package:lottie/lottie.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class UrlVideoScreen extends StatefulWidget {
   const UrlVideoScreen({super.key});
@@ -26,6 +27,19 @@ class _UrlVideoScreenState extends State<UrlVideoScreen> {
   final TextEditingController urlController = TextEditingController();
   // Store generated script info to enable video generation
   ScriptEntity? generatedScript;
+
+  Future<void> _openUrl(String url) async {
+    // You need to add url_launcher to your pubspec.yaml dependencies
+    // import 'package:url_launcher/url_launcher.dart';
+    final uri = Uri.parse(url);
+    if (await canLaunchUrl(uri)) {
+      await launchUrl(uri, mode: LaunchMode.externalApplication);
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Could not launch $url')),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -191,14 +205,14 @@ class _UrlVideoScreenState extends State<UrlVideoScreen> {
                               SizedBox(height: 10),
 
                               // Button to open video in browser
-                              // ElevatedButton.icon(
-                              //   icon: Icon(Icons.open_in_new),
-                              //   label: Text("Open Video in Browser"),
-                              //   onPressed:
-                              //       videoUrl != null
-                              //           ? () => _openUrl(videoUrl)
-                              //           : null,
-                              // ),
+                              ElevatedButton.icon(
+                                icon: Icon(Icons.open_in_new),
+                                label: Text("Open Video in Browser"),
+                                onPressed:
+                                    videoUrl != null
+                                        ? () => _openUrl(videoUrl)
+                                        : null,
+                              ),
                               SizedBox(height: 20),
                               if (videoUrl != null)
                                 UrlVideoPlayerWidget(videoUrl: videoUrl),

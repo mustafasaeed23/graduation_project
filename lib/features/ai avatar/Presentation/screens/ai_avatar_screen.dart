@@ -119,7 +119,7 @@ class _AiAvatarScreenState extends State<AiAvatarScreen> {
         generatedScript: generateScript!.generatedScript,
         language: selectedLanguage.toLowerCase(),
         accentOrDialect: selectedAccent.toLowerCase(),
-        speacker: selectedSpeaker.toLowerCase(),
+        speaker: selectedSpeaker.toLowerCase(),
         type: selectedOption.toLowerCase(),
       ),
     );
@@ -147,7 +147,7 @@ class _AiAvatarScreenState extends State<AiAvatarScreen> {
     } else if (state is GenerateScriptLoaded) {
       return _buildGeneratedScript(state.generateScriptEntity);
     } else if (state is VideoStatusLoadingWithProgress) {
-      return _buildVideoProgressDialog(state.progressCount.toDouble());
+      return _buildVideoProgressDialog(state.progressCount as double);
     } else if (state is AiAvatarVideoLoaded) {
       return _buildVideoSection(state.video.videoUrl);
     } else if (state is AiAvatarVideoError) {
@@ -186,7 +186,7 @@ class _AiAvatarScreenState extends State<AiAvatarScreen> {
       content: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Text("Generating video... ${(progress * 100).toStringAsFixed(1)}%"),
+          Text("Generating video... ${(progress).toStringAsFixed(1)}%"),
           SizedBox(height: 10.h),
           Lottie.asset(
             "assets/animations/Animation - 1748706708268.json",

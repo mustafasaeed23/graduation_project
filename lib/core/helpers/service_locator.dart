@@ -17,9 +17,7 @@ import 'package:graduation_project/features/auth/register/Domain/Use%20Case/regi
 import 'package:graduation_project/features/create%20videos/Data/Data%20Source/generate_video_data_source.dart';
 import 'package:graduation_project/features/create%20videos/Data/Repository/imply_repo.dart';
 import 'package:graduation_project/features/create%20videos/Domain/Contract%20Repo/generate_video_contract_repo.dart';
-import 'package:graduation_project/features/create%20videos/Domain/Use%20Cases/generate_script_use_case.dart';
-import 'package:graduation_project/features/create%20videos/Domain/Use%20Cases/generate_viedo_use_case.dart';
-import 'package:graduation_project/features/create%20videos/Domain/Use%20Cases/poll_video_status_use_case.dart';
+import 'package:graduation_project/features/create%20videos/Domain/Use%20Cases/generate_instant_video_use_cases.dart';
 import 'package:graduation_project/features/dashboard/Data/Data%20Source/dashboard_data_source.dart';
 import 'package:graduation_project/features/dashboard/Data/repo/dashboard_imply_repo.dart';
 import 'package:graduation_project/features/dashboard/Domain/contract%20repo/dashboard_contract_repo.dart';
@@ -137,17 +135,9 @@ class ServicesLocator {
         dataSource: getIt.get<GenerateVideoDataSource>(),
       ),
     );
-    getIt.registerLazySingleton<GenerateViedoUseCase>(
-      () => GenerateViedoUseCase(repo: getIt.get<GenerateVideoContractRepo>()),
-    );
-    getIt.registerLazySingleton<GenerateScriptUseCase>(
-      () => GenerateScriptUseCase(
+    getIt.registerLazySingleton<GenerateInstantVideoUseCase>(
+      () => GenerateInstantVideoUseCase(
         generateVideoContractRepo: getIt.get<GenerateVideoContractRepo>(),
-      ),
-    );
-    getIt.registerLazySingleton<PollVideoStatusUseCase>(
-      () => PollVideoStatusUseCase(
-        repository: getIt.get<GenerateVideoContractRepo>(),
       ),
     );
     // =======================================Settings====================================
@@ -182,7 +172,11 @@ class ServicesLocator {
 
     /// =========================================generate url video===============================
     getIt.registerLazySingleton<UrlVideoDataSource>(() => UrlVideoDataSource());
-    getIt.registerLazySingleton<GenerateUrlVideoRepository>(()=> UrlVideoImplyRepo(dataSource : getIt.get<UrlVideoDataSource>()));
-    getIt.registerLazySingleton<VideoUseCase>(() => VideoUseCase(repository: getIt.get<GenerateUrlVideoRepository>()));
+    getIt.registerLazySingleton<GenerateUrlVideoRepository>(
+      () => UrlVideoImplyRepo(dataSource: getIt.get<UrlVideoDataSource>()),
+    );
+    getIt.registerLazySingleton<VideoUseCase>(
+      () => VideoUseCase(repository: getIt.get<GenerateUrlVideoRepository>()),
+    );
   }
 }

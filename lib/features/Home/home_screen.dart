@@ -11,10 +11,8 @@ import 'package:graduation_project/features/ai%20avatar/Domain/usecases/get_all_
 import 'package:graduation_project/features/ai%20avatar/Presentation/bloc/generate_ai_avatar_videos_bloc.dart';
 import 'package:graduation_project/features/ai%20avatar/Presentation/cubit/ai_avatar_cubit.dart';
 import 'package:graduation_project/features/ai%20avatar/Presentation/screens/ai_avatar_screen.dart';
-import 'package:graduation_project/features/create%20videos/Domain/Use%20Cases/generate_script_use_case.dart';
-import 'package:graduation_project/features/create%20videos/Domain/Use%20Cases/generate_viedo_use_case.dart';
-import 'package:graduation_project/features/create%20videos/Domain/Use%20Cases/poll_video_status_use_case.dart';
-import 'package:graduation_project/features/create%20videos/Presentation/cubit/generate_video_cubit.dart';
+import 'package:graduation_project/features/create%20videos/Domain/Use%20Cases/generate_instant_video_use_cases.dart';
+import 'package:graduation_project/features/create%20videos/Presentation/bloc/generate_instant_video_bloc.dart';
 import 'package:graduation_project/features/create%20videos/Presentation/screens/create_video_screen.dart';
 import 'package:graduation_project/features/dashboard/Domain/usecases/dashboard_information_use_case.dart';
 import 'package:graduation_project/features/dashboard/Domain/usecases/get_all_videos_use_case.dart';
@@ -26,7 +24,6 @@ import 'package:graduation_project/features/settings/Presentation/screens/settin
 import 'package:graduation_project/features/videos/domain/usecases/generate_url_video_use_cases.dart';
 import 'package:graduation_project/features/videos/presentation/bloc/generate_url_video_bloc.dart';
 import 'package:graduation_project/features/videos/url_video_screen.dart';
-import 'package:http/http.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -52,10 +49,8 @@ class _HomeScreenState extends State<HomeScreen> {
     ),
     BlocProvider(
       create:
-          (context) => GenerateVideoCubit(
-            generateVideoUseCase: getIt.get<GenerateViedoUseCase>(),
-            generateScriptUseCase: getIt.get<GenerateScriptUseCase>(),
-            pollVideoStatusUseCase: getIt.get<PollVideoStatusUseCase>(),
+          (context) => GenerateInstantVideoBloc(
+            useCases: getIt.get<GenerateInstantVideoUseCase>(),
           ),
       child: CreateVideoScreen(),
     ),
@@ -67,9 +62,12 @@ class _HomeScreenState extends State<HomeScreen> {
                 getAllAiAvtarsUseCase: getIt.get<GetAllAiAvtarsUseCase>(),
               )..getAllAiAvtars(),
         ),
-        BlocProvider(create: (context) => GenerateAiAvatarVideosBloc(
-          useCases: getIt.get<GenerateAiAvtarVideoUseCase>()
-        )),
+        BlocProvider(
+          create:
+              (context) => GenerateAiAvatarVideosBloc(
+                useCases: getIt.get<GenerateAiAvtarVideoUseCase>(),
+              ),
+        ),
       ],
       child: AiAvatarScreen(),
     ),

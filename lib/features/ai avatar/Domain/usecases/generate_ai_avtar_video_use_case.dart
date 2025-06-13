@@ -26,7 +26,7 @@ class GenerateAiAvtarVideoUseCase {
     required String generatedScript,
     required String language,
     required String accentOrDialect,
-    required String speacker,
+    required String speaker,
     required String type,
   }) async {
     return aiAvatarContractRepo.generateAiAvtarVideo(
@@ -34,7 +34,7 @@ class GenerateAiAvtarVideoUseCase {
       generatedScript: generatedScript,
       language: language,
       accentOrDialect: accentOrDialect,
-      speacker: speacker,
+      speaker: speaker,
       type: type,
     );
   }

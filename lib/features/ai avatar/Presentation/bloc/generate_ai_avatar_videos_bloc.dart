@@ -44,7 +44,7 @@ class GenerateAiAvatarVideosBloc
         generatedScript: event.generatedScript,
         language: event.language,
         accentOrDialect: event.accentOrDialect,
-        speacker: event.speacker,
+        speaker: event.speaker,
         type: event.type,
       );
       emit(AiAvtatarVideoGenerated(jobId));
