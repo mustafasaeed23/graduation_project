@@ -99645,7 +99645,7 @@ $1(a){return A.beS()},
 $S:629}
 A.aMX.prototype={
 $2(a,b){var s=A.b9x(new A.aMV())
-return new A.uQ("/homePage",this.a.a.c.ga57(),s,"Wamdah App",$.b6y(),$.b6q(),b.a,!1,null)},
+return new A.uQ("/corePage",this.a.a.c.ga57(),s,"Wamdah App",$.b6y(),$.b6q(),b.a,!1,null)},
 $S:630}
 A.aMV.prototype={
 $2(a,b){return new A.J_(b,A.a([B.Er,B.Es,B.Et],t.At),null,null,!1,!1,null)},

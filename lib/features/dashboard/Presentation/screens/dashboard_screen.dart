@@ -143,13 +143,15 @@ class DashboardScreen extends StatelessWidget {
                           physics:
                               NeverScrollableScrollPhysics(), // Prevent scroll conflicts
                           itemCount: user.videosEntity.length,
-                          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 3, // 3 items per row
-                            crossAxisSpacing: 10.w, // horizontal spacing
-                            mainAxisSpacing: 10.h, // vertical spacing
-                            childAspectRatio:
-                                1.1, // adjust as needed for video item layout
-                          ),
+                          gridDelegate:
+                              SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount: 3,
+                                crossAxisSpacing: 10.w,
+                                mainAxisSpacing: 10.h,
+                                mainAxisExtent: 300.h,
+                                // childAspectRatio:
+                                //     1.1,
+                              ),
                           itemBuilder: (context, index) {
                             final video = user.videosEntity[index];
                             return GestureDetector(
