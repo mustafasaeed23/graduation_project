@@ -2,276 +2,330 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:graduation_project/core/helpers/service_locator.dart';
-import 'package:graduation_project/core/helpers/toast_manager.dart';
 import 'package:graduation_project/core/theming/colors.dart';
 import 'package:graduation_project/core/widgets/custom_button.dart';
-import 'package:graduation_project/features/core/Presentation/widgets/step_widget.dart';
-import 'package:graduation_project/features/create%20videos/Domain/Use%20Cases/generate_viedo_use_case.dart';
-import 'package:graduation_project/features/create%20videos/Presentation/cubit/generate_video_cubit.dart';
-import 'package:graduation_project/features/create%20videos/Presentation/cubit/generate_video_state.dart';
 import 'package:graduation_project/features/create%20videos/Presentation/widgets/input_widget.dart';
+import 'package:graduation_project/features/create%20videos/Presentation/widgets/steps_video_widget.dart';
 import 'package:graduation_project/features/settings/Presentation/widgets/drop_down_widget.dart';
+import 'package:graduation_project/features/create%20videos/Presentation/bloc/generate_instant_video_bloc.dart';
+import 'package:graduation_project/features/create%20videos/Presentation/bloc/generate_instant_video_event.dart';
+import 'package:graduation_project/features/create%20videos/Presentation/bloc/generate_instant_video_state.dart';
+import 'package:graduation_project/features/videos/domain/entities/script_entity.dart';
+import 'package:graduation_project/features/videos/presentation/url_video_player_widget.dart';
 import 'package:lottie/lottie.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class CreateVideoScreen extends StatefulWidget {
-  CreateVideoScreen({super.key});
+  const CreateVideoScreen({super.key});
 
   @override
   State<CreateVideoScreen> createState() => _CreateVideoScreenState();
 }
 
 class _CreateVideoScreenState extends State<CreateVideoScreen> {
-  String selectedOption = "Motivational";
+  String selectedOption = "Educational";
   String languageOption = "Arabic";
   String accentOption = "Egyptian";
-  final TextEditingController promotController = TextEditingController();
+  final TextEditingController promptController = TextEditingController();
+  ScriptEntity? generatedScript;
+
+  Future<void> _openUrl(String url) async {
+    // You need to add url_launcher to your pubspec.yaml dependencies
+    // import 'package:url_launcher/url_launcher.dart';
+    final uri = Uri.parse(url);
+    if (await canLaunchUrl(uri)) {
+      await launchUrl(uri, mode: LaunchMode.externalApplication);
+    } else {
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text('Could not launch $url')));
+    }
+  }
+
+  @override
+  void dispose() {
+    promptController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create:
-          (context) => GenerateVideoCubit(
-            generateViedoUseCase: getIt.get<GenerateViedoUseCase>(),
-          ),
-      child: Scaffold(
-        backgroundColor: Colors.black,
-        body: SingleChildScrollView(
-          child: Column(
-            children: [
-              SizedBox(height: 30.h),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+    return Scaffold(
+      backgroundColor: Colors.black,
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: ConstrainedBox(
+            constraints: BoxConstraints(minHeight: 1.sh),
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 30.w, vertical: 20.h),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  StepWidget(
-                    stepNumber: "1",
-                    headTitle: "Input",
-                    subTitle: "",
-                    circleColor: AppColors.wamdahSecoundPrimary,
-                    fontSize: 15,
+                  StepsVideoWidget(),
+                  SizedBox(height: 20.h),
+                  InputWidget(
+                    text: 'Input your prompt or choose a script',
+                    controller: promptController,
                   ),
-                  StepWidget(
-                    stepNumber: "2",
-                    headTitle: "Content",
-                    subTitle: "",
-                    circleColor: AppColors.wamdahSecoundPrimary,
-                    fontSize: 15,
-                  ),
-                  StepWidget(
-                    stepNumber: "3",
-                    headTitle: "Language",
-                    subTitle: "",
-                    circleColor: AppColors.wamdahSecoundPrimary,
-                    fontSize: 15,
-                  ),
-                  StepWidget(
-                    stepNumber: "4",
-                    headTitle: "Style",
-                    subTitle: "",
-                    circleColor: AppColors.wamdahSecoundPrimary,
-                    fontSize: 15,
-                  ),
-                  StepWidget(
-                    stepNumber: "5",
-                    headTitle: "Generate",
-                    subTitle: "",
-                    circleColor: AppColors.wamdahSecoundPrimary,
-                    fontSize: 15,
-                  ),
-                ],
-              ),
-              SizedBox(height: 10.h),
-              InputWidget(
-                text: "Input your prompt or choose a script",
-                controller: promotController,
-              ),
-              SizedBox(height: 10.h),
-
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 50.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      "category",
-                      style: GoogleFonts.poppins(
-                        fontWeight: FontWeight.w600,
-                        color: AppColors.wamdahGoldColor2,
-                        fontSize: 15,
-                      ),
-                    ),
-                    SizedBox(height: 15.h),
-
-                    CustomDropdown<String>(
-                      width: double.infinity,
-                      items: ["Motivational", "Tech", "Educational"],
-                      value: selectedOption,
-                      onChanged: (val) {
-                        setState(() {
-                          selectedOption = val!;
-                        });
+                  SizedBox(height: 20.h),
+                  Align(
+                    alignment: Alignment.bottomRight,
+                    child: CustomButton(
+                      text: "Generate Script",
+                      onPressed: () {
+                        final prompt = promptController.text.trim();
+                        if (prompt.isEmpty) return;
+                        context.read<GenerateInstantVideoBloc>().add(
+                          GenerateInstantVideoScriptEvent(
+                            userPromot: prompt,
+                            language: languageOption.toLowerCase(),
+                            accentOrDialect: accentOption.toLowerCase(),
+                            type: selectedOption.toLowerCase(),
+                          ),
+                        );
                       },
-                      itemToString: (val) => val.toString(),
+                      color: AppColors.wamdahSecoundPrimary,
+                      width: 60.w,
+                      height: 40.h,
+                      fontSize: 12,
+                      fontWeight: FontWeight.w500,
                     ),
-                  ],
-                ),
-              ),
-              SizedBox(height: 30.h),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 50.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-
-                      children: [
-                        Text(
-                          "Language",
-                          style: GoogleFonts.poppins(
-                            fontWeight: FontWeight.w600,
-                            color: AppColors.wamdahGoldColor2,
-                            fontSize: 15,
-                          ),
-                        ),
-                        SizedBox(height: 20),
-                        SizedBox(
-                          height: 50.h, // Or whatever fits
-                          child: CustomDropdown<String>(
-                            width: 500, // or double.infinity
-                            items: ["English", "Arabic"],
-                            value: languageOption,
-                            onChanged: (val) {
-                              setState(() {
-                                languageOption = val!;
-                              });
-                            },
-                            itemToString: (val) => val.toString(),
-                          ),
-                        ),
-                      ],
-                    ),
-                    SizedBox(width: 20.w),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          "Accent",
-                          style: GoogleFonts.poppins(
-                            fontWeight: FontWeight.w600,
-                            color: AppColors.wamdahGoldColor2,
-                            fontSize: 15,
-                          ),
-                        ),
-                        SizedBox(height: 20),
-                        SizedBox(
-                          height: 50.h, // Or whatever fits
-                          child: CustomDropdown<String>(
-                            width: 550, // or double.infinity
-                            items: [
-                              "Egyptian",
-                              "Syrian",
-                              "American",
-                              "British",
-                            ],
-                            value: accentOption,
-                            onChanged: (val) {
-                              setState(() {
-                                accentOption = val!;
-                              });
-                            },
-                            itemToString: (val) => val.toString(),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-              SizedBox(height: 60),
-              Center(
-                child: BlocConsumer<GenerateVideoCubit, GenerateVideoState>(
-                  listener: (context, state) {
-                    if (state is GenerateVideoError) {
-                    } else if (state is GenerateVideoLoading) {
-                      showDialog(
-                        context: context,
-                        barrierDismissible: false,
-                        builder:
-                            (context) => SizedBox(
-                              height: 300,
-                              width: 300,
-                              child: AlertDialog(
-                                icon: Align(
-                                  alignment: Alignment.topRight,
-                                  child: IconButton(
-                                    icon: Icon(Icons.close),
-                                    onPressed: () => Navigator.pop(context),
-                                    color: Colors.black,
-                                  ),
-                                ),
-                                backgroundColor: Colors.white,
-                                content: Column(
-                                  children: [
-                                    Row(
-                                      children: [
-                                        Text(
-                                          "Generating Video...",
-                                          style: GoogleFonts.poppins(
-                                            fontWeight: FontWeight.w500,
-                                            color: Colors.black,
-                                            fontSize: 15,
-                                          ),
-                                        ),
-                                        SizedBox(width: 10),
-
-                                        Lottie.asset(
-                                          "assets/animations/Animation - 1747426014372.json",
-                                          height: 200,
-                                          width: 200,
-                                        ),
-                                      ],
-                                    ),
-                                    SizedBox(height: 20.h),
-                                  ],
-                                ),
+                  ),
+                  SizedBox(height: 20.h),
+                  BlocConsumer<GenerateInstantVideoBloc, InstantVideoState>(
+                    listener: (context, state) {
+                      if (state is InstantVideoError) {
+                        ScaffoldMessenger.of(
+                          context,
+                        ).showSnackBar(SnackBar(content: Text(state.message)));
+                      }
+                    },
+                    builder: (context, state) {
+                      if (state is InstantVideoScriptLoading) {
+                        return Center(child: CircularProgressIndicator());
+                      } else if (state is InstantVideoScriptLoaded) {
+                        WidgetsBinding.instance.addPostFrameCallback((_) {
+                          setState(() {
+                            generatedScript = state.script;
+                          });
+                        });
+                        return Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            SizedBox(height: 20.h),
+                            Text(
+                              "Title:",
+                              style: GoogleFonts.poppins(
+                                fontWeight: FontWeight.w600,
+                                color: AppColors.wamdahGoldColor2,
+                                fontSize: 15,
                               ),
                             ),
-                      );
-                    } else if (state is GenerateVideoSuccess) {
-                      ToastManager.showBottomSmallToastSuccess(
-                        context: context,
-                        description: "Video Generated Successfully",
-                        bgColor: Colors.green,
-                      );
-                    }
-                  },
-                  builder: (context, state) {
-                    return CustomButton(
-                      onPressed: () {
-                        context.read<GenerateVideoCubit>().generateVideo(
-                          promot: promotController.text.toLowerCase().trim(),
-                          language: languageOption.toLowerCase(),
-                          accentOrDialect: accentOption.toLowerCase(),
-                          type: selectedOption.toLowerCase(),
+                            SizedBox(height: 10.h),
+                            Text(
+                              state.script.title,
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 14,
+                              ),
+                            ),
+                            SizedBox(height: 20.h),
+                            Text(
+                              "Script:",
+                              style: GoogleFonts.poppins(
+                                fontWeight: FontWeight.w600,
+                                color: AppColors.wamdahGoldColor2,
+                                fontSize: 15,
+                              ),
+                            ),
+                            SizedBox(height: 10.h),
+                            Text(
+                              state.script.generatedScript,
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 14,
+                              ),
+                            ),
+                          ],
                         );
-                        print("prompt: ${promotController.text}");
-                        print("language: $languageOption");
-                        print("accent: $accentOption");
-                        print("type: $selectedOption");
-                      },
+                      } else if (state is InstantVideoGenerating) {
+                        return Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            CircularProgressIndicator(),
+                            SizedBox(height: 10),
+                            Text(
+                              "Generating video...",
+                              style: TextStyle(color: Colors.white),
+                            ),
+                          ],
+                        );
+                      } else if (state
+                          is InsatntVideoStatusLoadingWithProgress) {
+                        return AlertDialog(
+                          backgroundColor: Colors.white,
+                          content: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Text(
+                                "Generating video... ${state.progressCount}%",
+                                style: TextStyle(color: Colors.black),
+                              ),
+                              SizedBox(height: 10),
+                              Lottie.asset(
+                                "assets/animations/Animation - 1748706708268.json",
+                                width: 100,
+                                height: 100,
+                              ),
+                            ],
+                          ),
+                        );
+                      } else if (state is InstantVideoStatusLoaded) {
+                        return Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            SizedBox(height: 20),
+                            Text(
+                              "Video generated successfully!",
+                              style: GoogleFonts.poppins(
+                                fontWeight: FontWeight.w600,
+                                color: AppColors.wamdahGoldColor2,
+                                fontSize: 16,
+                              ),
+                            ),
+                            SizedBox(height: 10),
+                            SelectableText(
+                              "Video URL: ${state.video.videoUrl}",
+                              style: TextStyle(color: Colors.white),
+                            ),
+                            SizedBox(height: 10.h),
+                            ElevatedButton.icon(
+                              icon: Icon(Icons.open_in_new),
+                              label: Text("Open Video in Browser"),
+                              onPressed:
+                                  state.video.videoUrl != null
+                                      ? () => _openUrl(state.video.videoUrl!)
+                                      : null,
+                            ),
+                            SizedBox(height: 20),
+                            if (state.video.videoUrl != null)
+                              UrlVideoPlayerWidget(
+                                videoUrl: state.video.videoUrl!,
+                              ),
+                          ],
+                        );
+                      }
+                      return SizedBox.shrink();
+                    },
+                  ),
+                  SizedBox(height: 30.h),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "Language",
+                              style: GoogleFonts.poppins(
+                                fontWeight: FontWeight.w600,
+                                color: AppColors.wamdahGoldColor2,
+                                fontSize: 15,
+                              ),
+                            ),
+                            SizedBox(height: 10.h),
+                            CustomDropdown<String>(
+                              width: double.infinity,
+                              items: ["Arabic", "English"],
+                              value: languageOption,
+                              onChanged:
+                                  (val) =>
+                                      setState(() => languageOption = val!),
+                              itemToString: (val) => val,
+                            ),
+                          ],
+                        ),
+                      ),
+                      SizedBox(width: 20.w),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "Accent",
+                              style: GoogleFonts.poppins(
+                                fontWeight: FontWeight.w600,
+                                color: AppColors.wamdahGoldColor2,
+                                fontSize: 15,
+                              ),
+                            ),
+                            SizedBox(height: 10.h),
+                            CustomDropdown<String>(
+                              width: double.infinity,
+                              items: [
+                                "Egyptian",
+                                "Syrian",
+                                "American",
+                                "British",
+                              ],
+                              value: accentOption,
+                              onChanged:
+                                  (val) => setState(() => accentOption = val!),
+                              itemToString: (val) => val,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 20.h),
+                  Text(
+                    "Category",
+                    style: GoogleFonts.poppins(
+                      fontWeight: FontWeight.w600,
+                      color: AppColors.wamdahGoldColor2,
+                      fontSize: 15,
+                    ),
+                  ),
+                  SizedBox(height: 10.h),
+                  CustomDropdown<String>(
+                    width: double.infinity,
+                    items: ["Educational", "Tech", "Tourism", "Nutrition"],
+                    value: selectedOption,
+                    onChanged: (val) => setState(() => selectedOption = val!),
+                    itemToString: (val) => val,
+                  ),
+                  SizedBox(height: 40.h),
+                  Center(
+                    child: CustomButton(
                       iconAsset: "assets/icons/Frame.svg",
-                      text: "Generate",
-                      width: 150,
-                      height: 40,
+                      text: "Generate Video",
+                      width: 60.w,
+                      height: 40.h,
                       fontSize: 14,
                       color: AppColors.wamdahGoldColor2,
                       textColor: Colors.white,
-                    );
-                  },
-                ),
+                      onPressed:
+                          generatedScript == null
+                              ? null
+                              : () {
+                                context.read<GenerateInstantVideoBloc>().add(
+                                  GenerateInstantVideo(
+                                    title: generatedScript!.title,
+                                    generatedScript:
+                                        generatedScript!.generatedScript,
+                                    language: languageOption.toLowerCase(),
+                                    accentOrDialect: accentOption.toLowerCase(),
+                                    type: selectedOption.toLowerCase(),
+                                  ),
+                                );
+                              },
+                    ),
+                  ),
+                  SizedBox(height: 30.h),
+                ],
               ),
-            ],
+            ),
           ),
         ),
       ),

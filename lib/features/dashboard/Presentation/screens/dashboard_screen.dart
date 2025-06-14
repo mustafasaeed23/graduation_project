@@ -138,44 +138,41 @@ class DashboardScreen extends StatelessWidget {
                             ],
                           ),
                         )
-                        : SingleChildScrollView(
-                          scrollDirection: Axis.horizontal,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: List.generate(user.videosEntity.length, (
-                              index,
-                            ) {
-                              final video = user.videosEntity[index];
-                              return Padding(
-                                padding: EdgeInsets.only(
-                                  right: 10.w,
-                                ), // spacing between items
-                                child: GestureDetector(
-                                  onTap: () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder:
-                                            (context) =>
-                                                RecentVideoDetailsScreen(
-                                                  video:
-                                                      user.videosEntity[index],
-                                                ),
-                                      ),
-                                    );
-                                  },
-                                  child: RecentVideoContainer(
-                                    videoUrl: video.videoSourceEntity.secureUrl,
-
-                                    title: video.title,
-                                    createdAt: video.createdAt
-                                        .formatIsoStringToRelativeTime(context),
-                                    duration: video.duration.toString(),
-                                  ),
-                                ),
-                              );
-                            }),
+                        : GridView.builder(
+                          shrinkWrap: true,
+                          physics:
+                              NeverScrollableScrollPhysics(), // Prevent scroll conflicts
+                          itemCount: user.videosEntity.length,
+                          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 3, // 3 items per row
+                            crossAxisSpacing: 10.w, // horizontal spacing
+                            mainAxisSpacing: 10.h, // vertical spacing
+                            childAspectRatio:
+                                1.1, // adjust as needed for video item layout
                           ),
+                          itemBuilder: (context, index) {
+                            final video = user.videosEntity[index];
+                            return GestureDetector(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder:
+                                        (context) => RecentVideoDetailsScreen(
+                                          video: video,
+                                        ),
+                                  ),
+                                );
+                              },
+                              child: RecentVideoContainer(
+                                videoUrl: video.videoSourceEntity.secureUrl,
+                                title: video.title,
+                                createdAt: video.createdAt
+                                    .formatIsoStringToRelativeTime(context),
+                                duration: video.duration.toString(),
+                              ),
+                            );
+                          },
                         ),
                   ],
                 ),

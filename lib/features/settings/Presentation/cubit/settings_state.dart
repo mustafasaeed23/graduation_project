@@ -1,10 +1,19 @@
-part of 'settings_cubit.dart';
+import 'package:graduation_project/features/settings/Domain/entites/user_profile_entity.dart';
 
-sealed class SettingsState extends Equatable {
-  const SettingsState();
+abstract class SettingsState {}
 
-  @override
-  List<Object> get props => [];
+class SettingsInitial extends SettingsState {}
+
+class UserProfileLoading extends SettingsState {}
+
+class UserProfileLoaded extends SettingsState {
+  final UserProfileEntity entity;
+
+  UserProfileLoaded({required this.entity});
 }
 
-final class SettingsInitial extends SettingsState {}
+class UserProfileError extends SettingsState {
+  final String message;
+
+  UserProfileError({required this.message});
+}

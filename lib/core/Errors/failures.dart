@@ -30,3 +30,7 @@ class OfflineFailure extends Failure {
    
   });
 }
+
+class TimeoutFailure extends Failure {
+  TimeoutFailure() : super(message: 'Video generation timed out');
+}
