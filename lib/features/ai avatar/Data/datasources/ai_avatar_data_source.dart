@@ -37,7 +37,7 @@ class AiAvatarDataSource extends BaseRepository {
     final response = await dio.post(
       endPoint: EndPoints.generateScript,
       data: {
-        "userPromot": userPromot,
+        "userPrompt": userPromot,
         "language": language,
         "accentOrDialect": accentOrDialect,
         "type": type,

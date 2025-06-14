@@ -22,9 +22,7 @@ class _WamdahWebSiteState extends State<WamdahWebSite> {
   Widget build(BuildContext context) {
     return ScreenUtilInit(
       child: MultiBlocProvider(
-        providers: [
-          BlocProvider(create: (context) => ThemeBloc()),
-        ],
+        providers: [BlocProvider(create: (context) => ThemeBloc())],
         child: BlocBuilder<ThemeBloc, ThemeState>(
           builder: (context, themeState) {
             return MaterialApp(
