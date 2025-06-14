@@ -40,7 +40,7 @@ class _WamdahWebSiteState extends State<WamdahWebSite> {
               debugShowCheckedModeBanner: false,
               title: 'Wamdah App',
               onGenerateRoute: widget.appRouter.generateRoute,
-              initialRoute: Routes.homePage,
+              initialRoute: Routes.corePage,
               theme: lightTheme,
               darkTheme: darkTheme,
               themeMode: themeState.themeMode,
