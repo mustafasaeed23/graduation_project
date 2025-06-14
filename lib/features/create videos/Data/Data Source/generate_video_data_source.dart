@@ -8,36 +8,6 @@ import 'package:graduation_project/features/videos/data/models/script_model.dart
 import 'package:graduation_project/features/videos/data/models/url_video_model.dart';
 
 class GenerateVideoDataSource extends BaseRepository {
-  // Future<GenerateVideoResponse> generateVideo({
-  //   required String language,
-  //   required String accentOrDialect,
-  //   required String type,
-  //   required String generatedScript,
-  //   required String title,
-  // }) async {
-  //   if (!await networkInfo.isConnected) {
-  //     throw Exception("No internet connection");
-  //   }
-
-  //   final response = await dio.post(
-  //     endPoint: EndPoints.generateVideo,
-  //     data: {
-  //       "generatedScript": generatedScript,
-  //       "title": title,
-  //       "language": language,
-  //       "accentOrDialect": accentOrDialect,
-  //       "type": type,
-  //     },
-  //   );
-
-  //   if (response.statusCode != 200 || !response.data.containsKey("jobId")) {
-  //     throw Exception(
-  //       "Generate Video failed: ${response.data["message"] ?? 'Unknown error'}",
-  //     );
-  //   }
-
-  //   return GenerateVideoResponse.fromJson(response.data);
-  // }
   Future<String> generateVideo({
     required String title,
     required String generatedScript,
@@ -77,30 +47,6 @@ class GenerateVideoDataSource extends BaseRepository {
     return UrlVideoModel.fromJson(response.data);
   }
 
-  // generate script
-  // Future<GenerateScriptModel> generateScript({
-  //   required String userPromot,
-  //   required String language,
-  //   required String accentOrDialect,
-  //   required String type,
-  // }) async {
-  //   if (!await networkInfo.isConnected) {
-  //     throw Exception("No internet connection");
-  //   }
-  //   final response = await dio.post(
-  //     endPoint: EndPoints.generateScript,
-  //     data: {
-  //       "userPromot": userPromot,
-  //       "language": language,
-  //       "accentOrDialect": accentOrDialect,
-  //       "type": type,
-  //     },
-  //   );
-  //   if (response.data["success"] != true) {
-  //     throw Exception("Generate Script failed: ${response.data["message"]}");
-  //   }
-  //   return GenerateScriptModel.fromJson(response.data["data"]);
-  // }
   Future<ScriptModel> generateScript({
     required String userPromot,
     required String type,
@@ -110,7 +56,7 @@ class GenerateVideoDataSource extends BaseRepository {
     final response = await dio.post(
       endPoint: EndPoints.generateScript,
       data: {
-        "userPromot": userPromot,
+        "userPrompt": userPromot,
         "type": type,
         "language": language,
         "accentOrDialect": accentOrDialect,
