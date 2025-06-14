@@ -22,9 +22,7 @@ class _WamdahWebSiteState extends State<WamdahWebSite> {
   Widget build(BuildContext context) {
     return ScreenUtilInit(
       child: MultiBlocProvider(
-        providers: [
-          BlocProvider(create: (context) => ThemeBloc()),
-        ],
+        providers: [BlocProvider(create: (context) => ThemeBloc())],
         child: BlocBuilder<ThemeBloc, ThemeState>(
           builder: (context, themeState) {
             return MaterialApp(
@@ -42,7 +40,7 @@ class _WamdahWebSiteState extends State<WamdahWebSite> {
               debugShowCheckedModeBanner: false,
               title: 'Wamdah App',
               onGenerateRoute: widget.appRouter.generateRoute,
-              initialRoute: Routes.corePage,
+              initialRoute: Routes.homePage,
               theme: lightTheme,
               darkTheme: darkTheme,
               themeMode: themeState.themeMode,
