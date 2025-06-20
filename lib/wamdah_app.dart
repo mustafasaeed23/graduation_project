@@ -2,8 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:graduation_project/core/helpers/service_locator.dart';
 import 'package:graduation_project/core/routing/app_router.dart';
 import 'package:graduation_project/core/routing/routes.dart';
+import 'package:graduation_project/features/dashboard/Domain/usecases/dashboard_information_use_case.dart';
+import 'package:graduation_project/features/dashboard/Domain/usecases/get_all_videos_use_case.dart';
+import 'package:graduation_project/features/dashboard/Presentation/cubit/dashboard_cubit.dart';
 import 'package:graduation_project/mobile/theme/app_theme.dart';
 import 'package:graduation_project/mobile/theme/bloc/theme_bloc.dart';
 import 'package:graduation_project/mobile/theme/bloc/theme_state.dart';
@@ -22,7 +26,16 @@ class _WamdahWebSiteState extends State<WamdahWebSite> {
   Widget build(BuildContext context) {
     return ScreenUtilInit(
       child: MultiBlocProvider(
-        providers: [BlocProvider(create: (context) => ThemeBloc())],
+        providers: [
+          BlocProvider(create: (context) => ThemeBloc()),
+          BlocProvider(
+            create:
+                (context) => DashboardCubit(
+                  useCase: getIt.get<DashboardInformationUseCase>(),
+                  getAllVideosUseCase: getIt.get<GetAllVideosUseCase>(),
+                )..getDashboardInformation(),
+          ),
+        ],
         child: BlocBuilder<ThemeBloc, ThemeState>(
           builder: (context, themeState) {
             return MaterialApp(

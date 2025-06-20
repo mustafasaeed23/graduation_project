@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:graduation_project/features/dashboard/Presentation/cubit/dashboard_cubit.dart';
 import 'package:graduation_project/features/video%20details/cubit/video_details_cubit.dart';
 import 'package:graduation_project/features/video%20details/cubit/video_details_state.dart';
 import 'package:video_player/video_player.dart';
@@ -58,49 +59,57 @@ class _RecentVideoContainerState extends State<RecentVideoContainer> {
 
     showDialog(
       context: context,
-      builder: (_) => AlertDialog(
-        backgroundColor: AppColors.drawerBg,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(12),
-        ),
-        title: Text(
-          'Rename Video',
-          style: GoogleFonts.poppins(color: Colors.white),
-        ),
-        content: TextField(
-          controller: titleController,
-          style: const TextStyle(color: Colors.white),
-          decoration: InputDecoration(
-            hintText: "Enter new title",
-            hintStyle: TextStyle(color: Colors.grey),
-            enabledBorder: UnderlineInputBorder(
-              borderSide: BorderSide(color: AppColors.wamdahGoldColor2),
+      builder:
+          (_) => AlertDialog(
+            backgroundColor: AppColors.drawerBg,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(12),
             ),
-            focusedBorder: UnderlineInputBorder(
-              borderSide: BorderSide(color: AppColors.wamdahGoldColor2),
+            title: Text(
+              'Rename Video',
+              style: GoogleFonts.poppins(color: Colors.white),
             ),
-          ),
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: Text("Cancel", style: GoogleFonts.poppins(color: Colors.grey)),
-          ),
-          TextButton(
-            onPressed: () {
-              final newTitle = titleController.text.trim();
-              if (newTitle.isNotEmpty) {
-                context.read<VideoDetailsCubit>().renameVideo(
+            content: TextField(
+              controller: titleController,
+              style: const TextStyle(color: Colors.white),
+              decoration: InputDecoration(
+                hintText: "Enter new title",
+                hintStyle: TextStyle(color: Colors.grey),
+                enabledBorder: UnderlineInputBorder(
+                  borderSide: BorderSide(color: AppColors.wamdahGoldColor2),
+                ),
+                focusedBorder: UnderlineInputBorder(
+                  borderSide: BorderSide(color: AppColors.wamdahGoldColor2),
+                ),
+              ),
+            ),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.pop(context),
+                child: Text(
+                  "Cancel",
+                  style: GoogleFonts.poppins(color: Colors.grey),
+                ),
+              ),
+              TextButton(
+                onPressed: () {
+                  final newTitle = titleController.text.trim();
+                  if (newTitle.isNotEmpty) {
+                    context.read<VideoDetailsCubit>().renameVideo(
                       newTitle: newTitle,
                       videoId: widget.videoId,
                     );
-                Navigator.pop(context);
-              }
-            },
-            child: Text("Save", style: GoogleFonts.poppins(color: AppColors.wamdahGoldColor2)),
+                    Navigator.pop(context);
+                    context.read<DashboardCubit>().getDashboardInformation();
+                  }
+                },
+                child: Text(
+                  "Save",
+                  style: GoogleFonts.poppins(color: AppColors.wamdahGoldColor2),
+                ),
+              ),
+            ],
           ),
-        ],
-      ),
     );
   }
 
@@ -116,9 +125,9 @@ class _RecentVideoContainerState extends State<RecentVideoContainer> {
             SnackBar(content: Text("Renamed to: ${state.entity.title}")),
           );
         } else if (state is VideoDetailsError) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text(state.message)),
-          );
+          ScaffoldMessenger.of(
+            context,
+          ).showSnackBar(SnackBar(content: Text(state.message)));
         }
       },
       builder: (context, state) {
@@ -136,33 +145,34 @@ class _RecentVideoContainerState extends State<RecentVideoContainer> {
                 child: SizedBox(
                   height: 200,
                   width: double.infinity,
-                  child: _isInitialized
-                      ? Stack(
-                          alignment: Alignment.center,
-                          children: [
-                            AspectRatio(
-                              aspectRatio: _controller.value.aspectRatio,
-                              child: VideoPlayer(_controller),
-                            ),
-                            IconButton(
-                              icon: Icon(
-                                _controller.value.isPlaying
-                                    ? Icons.pause_circle_outline
-                                    : Icons.play_circle_outline,
-                                color: AppColors.wamdahGoldColor2,
-                                size: 50,
+                  child:
+                      _isInitialized
+                          ? Stack(
+                            alignment: Alignment.center,
+                            children: [
+                              AspectRatio(
+                                aspectRatio: _controller.value.aspectRatio,
+                                child: VideoPlayer(_controller),
                               ),
-                              onPressed: () {
-                                setState(() {
+                              IconButton(
+                                icon: Icon(
                                   _controller.value.isPlaying
-                                      ? _controller.pause()
-                                      : _controller.play();
-                                });
-                              },
-                            ),
-                          ],
-                        )
-                      : const Center(child: CircularProgressIndicator()),
+                                      ? Icons.pause_circle_outline
+                                      : Icons.play_circle_outline,
+                                  color: AppColors.wamdahGoldColor2,
+                                  size: 50,
+                                ),
+                                onPressed: () {
+                                  setState(() {
+                                    _controller.value.isPlaying
+                                        ? _controller.pause()
+                                        : _controller.play();
+                                  });
+                                },
+                              ),
+                            ],
+                          )
+                          : const Center(child: CircularProgressIndicator()),
                 ),
               ),
               const SizedBox(height: 10),
@@ -178,7 +188,10 @@ class _RecentVideoContainerState extends State<RecentVideoContainer> {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 12),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 12.0,
+                  vertical: 12,
+                ),
                 child: Text(
                   widget.createdAt,
                   style: GoogleFonts.poppins(
