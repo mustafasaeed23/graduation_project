@@ -23,4 +23,17 @@ class UserProfileDataSource extends BaseRepository {
       throw ServerException(response.data["message"] ?? "Unknown error");
     }
   }
+
+  Future<String> purchaseCredits({required int credit}) async {
+    final response = await dio.post(
+      endPoint: EndPoints.purchaseCredits,
+      data: {"credits": credit},
+    );
+
+    if (response.data["success"] != true) {
+      throw ServerException(response.data["message"]);
+    }
+
+    return response.data["message"];
+  }
 }

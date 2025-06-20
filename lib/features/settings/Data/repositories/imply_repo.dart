@@ -27,4 +27,23 @@ class ImplyRepo implements ProfileContractRepo {
       );
     }
   }
+
+  @override
+  Future<Either<Failure, String>> purchaseCredits({required int credit}) async {
+    try {
+      final result = await userProfileDataSource.purchaseCredits(
+        credit: credit,
+      );
+      return Right(result);
+    } on ServerException catch (err) {
+      return Left(ServerFailure(message: err.message));
+    } on OfflineException {
+      return const Left(OfflineFailure(message: OFFLINE_FAILURE_MESSAGE));
+    } catch (err) {
+      printDebug(err);
+      return const Left(
+        ServerFailure(message: 'Unexpected error occurred. Please try again.'),
+      );
+    }
+  }
 }

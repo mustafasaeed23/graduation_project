@@ -4,4 +4,5 @@ import 'package:graduation_project/features/settings/Domain/entites/user_profile
 
 abstract class ProfileContractRepo {
   Future<Either<Failure, UserProfileEntity>> getUserProfile();
+  Future<Either<Failure, String>> purchaseCredits({required int credit});
 }

@@ -1,21 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:graduation_project/core/theming/colors.dart';
 import 'package:graduation_project/features/settings/Domain/entites/user_profile_entity.dart';
+import 'package:graduation_project/features/settings/Presentation/cubits/cubit/credits_cubit.dart';
 import 'package:graduation_project/features/settings/Presentation/widgets/drop_down_widget.dart';
 import 'package:graduation_project/features/settings/Presentation/widgets/purchase_widget.dart';
 
-class CriedtsWidget extends StatefulWidget {
+class CreditsWidget extends StatefulWidget {
   final List<PaymentEntity> payments;
 
-  const CriedtsWidget({super.key, required this.payments});
+  const CreditsWidget({super.key, required this.payments});
 
   @override
-  State<CriedtsWidget> createState() => _CriedtsWidgetState();
+  State<CreditsWidget> createState() => _CreditsWidgetState();
 }
 
-class _CriedtsWidgetState extends State<CriedtsWidget> {
+class _CreditsWidgetState extends State<CreditsWidget> {
   int selectedCredit = 50;
 
   @override
@@ -33,7 +35,7 @@ class _CriedtsWidgetState extends State<CriedtsWidget> {
         ),
         SizedBox(height: 30.h),
         Container(
-          width: 800,
+          width: double.infinity,
           padding: EdgeInsets.symmetric(vertical: 15, horizontal: 15),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10.r),
@@ -66,21 +68,29 @@ class _CriedtsWidgetState extends State<CriedtsWidget> {
                     itemToString: (val) => val.toString(),
                   ),
                   Spacer(),
-                  Container(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 15,
-                      vertical: 10,
-                    ),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10.r),
-                      color: AppColors.wamdahGoldColor2,
-                    ),
-                    child: Text(
-                      "Purchase",
-                      style: GoogleFonts.poppins(
-                        fontWeight: FontWeight.w500,
-                        fontSize: 12,
-                        color: Colors.white,
+                  GestureDetector(
+                    onTap: () {
+                      context.read<CreditsCubitCubit>().purchaseCredits(
+                        credit: selectedCredit,
+                        context: context,
+                      );
+                    },
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 15,
+                        vertical: 10,
+                      ),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10.r),
+                        color: AppColors.wamdahGoldColor2,
+                      ),
+                      child: Text(
+                        "Purchase",
+                        style: GoogleFonts.poppins(
+                          fontWeight: FontWeight.w500,
+                          fontSize: 12,
+                          color: Colors.white,
+                        ),
                       ),
                     ),
                   ),
@@ -98,7 +108,9 @@ class _CriedtsWidgetState extends State<CriedtsWidget> {
                 ),
               ),
               SizedBox(height: 15.h),
-              ...widget.payments.map((payment) => PurchaseWidget(payment: payment)).toList(),
+              ...widget.payments
+                  .map((payment) => PurchaseWidget(payment: payment))
+                  .toList(),
             ],
           ),
         ),

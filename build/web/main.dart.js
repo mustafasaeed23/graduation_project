@@ -96860,7 +96860,7 @@ return A.u($async$wO,r)}}
 A.Bo.prototype={
 io(){var s=0,r=A.v(t.H),q,p,o,n,m,l,k
 var $async$io=A.w(function(a,b){if(a===1)return A.r(b,r)
-while(true)switch(s){case 0:p=A.b7E("https://uploaded-clearance-page-raleigh.trycloudflare.com/api/",!0,new A.aB1())
+while(true)switch(s){case 0:p=A.b7E("https://appliances-inch-funny-aviation.trycloudflare.com/api/",!0,new A.aB1())
 o=new A.ag_($,new A.Vc(A.a([B.EW],t.i6)),$,new A.ajT(51200),!1)
 o.E8$=p
 o.a14$=new A.ado(A.aM(t.lZ))
@@ -97450,7 +97450,7 @@ m=p.b
 m===$&&A.b()
 o=t.N
 s=4
-return A.q(m.lu(A.aE(["userPromot",d,"language",b,"accentOrDialect",a,"type",c],o,o),"scripts/generate"),$async$fG)
+return A.q(m.lu(A.aE(["userPrompt",d,"language",b,"accentOrDialect",a,"type",c],o,o),"scripts/generate"),$async$fG)
 case 4:n=f
 if(!J.e(J.ay(n.a,"success"),!0))throw A.c(A.b5("Generate Script failed: "+A.j(J.ay(n.a,"message"))))
 m=J.ay(n.a,"data")
@@ -98270,7 +98270,7 @@ while(true)switch(s){case 0:m=p.b
 m===$&&A.b()
 o=t.N
 s=3
-return A.q(m.lu(A.aE(["userPromot",d,"type",c,"language",b,"accentOrDialect",a],o,o),"scripts/generate"),$async$fG)
+return A.q(m.lu(A.aE(["userPrompt",d,"type",c,"language",b,"accentOrDialect",a],o,o),"scripts/generate"),$async$fG)
 case 3:n=f
 if(!J.e(J.ay(n.a,"success"),!0))throw A.c(A.b5("Generate Script failed: "+A.j(J.ay(n.a,"message"))))
 q=A.aZ_(J.ay(n.a,"data"))

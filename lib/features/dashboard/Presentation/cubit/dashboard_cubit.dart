@@ -31,7 +31,7 @@ class DashboardCubit extends Cubit<DashboardState> {
     result.fold(
       (failure) {
         emit(AllVideosErrorState(message: failure.message));
-        print(failure.message);
+        print("cubit error ${failure.message}");
       },
       (data) {
         emit(AllVideosSuccessState(videos: data));

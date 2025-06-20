@@ -5,15 +5,15 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:graduation_project/core/helpers/date_format.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 
-
 extension Navigation on BuildContext {
   Future<dynamic> pushNamed(String routeName, {Object? arguments}) {
     return Navigator.of(this).pushNamed(routeName, arguments: arguments);
   }
 
   Future<dynamic> pushReplacementNamed(String routeName, {Object? arguments}) {
-    return Navigator.of(this)
-        .pushReplacementNamed(routeName, arguments: arguments);
+    return Navigator.of(
+      this,
+    ).pushReplacementNamed(routeName, arguments: arguments);
   }
 
   Future<dynamic> pushNamedAndRemoveUntil(
@@ -21,13 +21,13 @@ extension Navigation on BuildContext {
     Object? arguments,
   }) {
     return Navigator.of(this).pushNamedAndRemoveUntil(
-        routeName, (route) => false,
-        arguments: arguments);
+      routeName,
+      (route) => false,
+      arguments: arguments,
+    );
   }
 
-  void pop({bool? isTrue}) => Navigator.of(this).pop(
-        isTrue ?? false,
-      );
+  void pop({bool? isTrue}) => Navigator.of(this).pop(isTrue ?? false);
 }
 
 extension StringExtensions on String {
@@ -37,10 +37,10 @@ extension StringExtensions on String {
 
 extension StringExtension on String {
   String removeSpecialCharacters() {
-    return replaceAll('\t', '')
-        .replaceAll('\r', '')
-        .replaceAll('\n', '')
-        .replaceAll('\\', '');
+    return replaceAll(
+      '\t',
+      '',
+    ).replaceAll('\r', '').replaceAll('\n', '').replaceAll('\\', '');
   }
 }
 
@@ -57,7 +57,10 @@ extension StringExtension on String {
 
 extension RemoveBracesToString on List<String> {
   String toStringListAndRemoveBraces() {
-    return toString().replaceAll("[", "").replaceAll("]", "").replaceAll(",", " -");
+    return toString()
+        .replaceAll("[", "")
+        .replaceAll("]", "")
+        .replaceAll(",", " -");
   }
 }
 
@@ -143,8 +146,10 @@ extension RowPaddingExtension on Row {
 
 extension DoubleExtraction on String {
   double extractDouble() {
-    final numericPart =
-        replaceAll(RegExp(r'[^0-9.]'), ''); // Remove non-numeric characters
+    final numericPart = replaceAll(
+      RegExp(r'[^0-9.]'),
+      '',
+    ); // Remove non-numeric characters
     return double.tryParse(numericPart) ?? 0.0;
   }
 }
@@ -237,8 +242,12 @@ extension PaddingWidgetExtension on Widget {
         child: this,
       );
 
-  Widget withDirectionalOnlyPadding(
-      {double? start, double? end, double? top, double? bottom}) {
+  Widget withDirectionalOnlyPadding({
+    double? start,
+    double? end,
+    double? top,
+    double? bottom,
+  }) {
     return Padding(
       padding: EdgeInsetsDirectional.only(
         start: start ?? 0,

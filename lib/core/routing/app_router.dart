@@ -55,6 +55,11 @@ class AppRouter {
           child: AiAvatarScreen(),
           type: PageTransitionType.fade,
         );
+      // case Routes.allVideosScreen:
+      //   return PageTransition(
+      //     child: AllVideosScreen(),
+      //     type: PageTransitionType.fade,
+      //   );
 
       case Routes.homePage:
         return PageTransition(

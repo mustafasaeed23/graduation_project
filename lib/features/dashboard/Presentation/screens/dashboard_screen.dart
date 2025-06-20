@@ -5,7 +5,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:graduation_project/core/helpers/extensions.dart';
 import 'package:graduation_project/core/routing/routes.dart';
 import 'package:graduation_project/core/theming/colors.dart';
-import 'package:graduation_project/features/dashboard/Domain/entities/user_data_entity.dart';
 import 'package:graduation_project/features/dashboard/Presentation/cubit/dashboard_cubit.dart';
 import 'package:graduation_project/features/dashboard/Presentation/cubit/dashboard_state.dart';
 import 'package:graduation_project/features/dashboard/Presentation/screens/recent_video_details_screen.dart';
@@ -89,28 +88,28 @@ class DashboardScreen extends StatelessWidget {
                     Row(
                       children: [
                         Text(
-                          "Recent Projects",
+                          "Recent Videos",
                           style: GoogleFonts.poppins(
                             color: Colors.white,
                             fontWeight: FontWeight.w500,
                             fontSize: 20,
                           ),
                         ),
-                        Spacer(),
-                        InkWell(
-                          onTap: () {
-                            // context.pushNamed(Routes.allVideosScreen);
-                            // context.read<DashboardCubit>().getAllVideos();
-                          },
-                          child: Text(
-                            "see all",
-                            style: GoogleFonts.poppins(
-                              color: Colors.grey,
-                              fontWeight: FontWeight.w500,
-                              fontSize: 15,
-                            ),
-                          ),
-                        ),
+                        // Spacer(),
+                        // InkWell(
+                        //   onTap: () {
+                        //     context.pushNamed(Routes.allVideosScreen);
+                        //     // context.read<DashboardCubit>().getAllVideos();
+                        //   },
+                        //   child: Text(
+                        //     "see all",
+                        //     style: GoogleFonts.poppins(
+                        //       color: Colors.grey,
+                        //       fontWeight: FontWeight.w500,
+                        //       fontSize: 15,
+                        //     ),
+                        //   ),
+                        // ),
                       ],
                     ),
                     SizedBox(height: 30.h),
@@ -170,8 +169,9 @@ class DashboardScreen extends StatelessWidget {
                                 videoUrl: video.videoSourceEntity.secureUrl,
                                 title: video.title,
                                 createdAt: video.createdAt
-                                    .formatIsoStringToRelativeTime(context),
+                                    .formatIsoStringToTime(context),
                                 duration: video.duration.toString(),
+                                videoId: video.sId,
                               ),
                             );
                           },

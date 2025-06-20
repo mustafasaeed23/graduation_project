@@ -27,6 +27,9 @@ import 'package:graduation_project/features/settings/Data/datasources/user_profi
 import 'package:graduation_project/features/settings/Data/repositories/imply_repo.dart';
 import 'package:graduation_project/features/settings/Domain/repositories/profile_contract_repo.dart';
 import 'package:graduation_project/features/settings/Domain/usecases/get_user_profile_use_case.dart';
+import 'package:graduation_project/features/video%20details/data/datasources/video_details_data_source.dart';
+import 'package:graduation_project/features/video%20details/data/repositories/video_details_imply_repo.dart';
+import 'package:graduation_project/features/video%20details/domain/usecases/video_details_use_case.dart';
 import 'package:graduation_project/features/videos/data/datasources/url_video_data_source.dart';
 import 'package:graduation_project/features/videos/data/repositories/url_video_imply_repo.dart';
 import 'package:graduation_project/features/videos/domain/repositories/generate_url_videos_contract_repo.dart';
@@ -177,6 +180,21 @@ class ServicesLocator {
     );
     getIt.registerLazySingleton<VideoUseCase>(
       () => VideoUseCase(repository: getIt.get<GenerateUrlVideoRepository>()),
+    );
+
+    /// ===================================video details=================================
+    getIt.registerLazySingleton<VideoDetailsDataSource>(
+      () => VideoDetailsDataSource(),
+    );
+    getIt.registerLazySingleton<VideoDetailsImplyRepo>(
+      () => VideoDetailsImplyRepo(
+        videosDetailsDataSource: getIt.get<VideoDetailsDataSource>(),
+      ),
+    );
+    getIt.registerLazySingleton<VideoDetailsUseCase>(
+      () => VideoDetailsUseCase(
+        videoDetailsContractRepo: getIt.get<VideoDetailsImplyRepo>(),
+      ),
     );
   }
 }

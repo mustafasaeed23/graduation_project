@@ -3,8 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:graduation_project/core/theming/colors.dart';
-import 'package:graduation_project/features/settings/Presentation/cubit/settings_cubit.dart';
-import 'package:graduation_project/features/settings/Presentation/cubit/settings_state.dart';
+import 'package:graduation_project/features/settings/Presentation/cubits/settings_cubit.dart';
+import 'package:graduation_project/features/settings/Presentation/cubits/settings_state.dart';
 import 'package:graduation_project/features/settings/Presentation/widgets/criedts_widget.dart';
 import 'package:graduation_project/features/settings/Presentation/widgets/security_widget.dart';
 import 'package:graduation_project/features/settings/Presentation/widgets/social_media_widget.dart';
@@ -52,7 +52,7 @@ class SettingsScreen extends StatelessWidget {
                     SocialMediaWidget(),
                     SizedBox(height: 40.h),
 
-                    CriedtsWidget(payments: entity.payments),
+                    CreditsWidget(payments: entity.payments),
                     SizedBox(height: 50.h),
                     Align(
                       alignment: Alignment.centerRight,

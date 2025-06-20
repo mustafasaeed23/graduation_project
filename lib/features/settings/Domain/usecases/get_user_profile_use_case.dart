@@ -11,4 +11,8 @@ class GetUserProfileUseCase {
   Future<Either<Failure, UserProfileEntity>> call() async {
     return await profileContractRepo.getUserProfile();
   }
+
+  Future<Either<Failure, String>> purchaseCredits({
+    required int credit,
+  }) async => await profileContractRepo.purchaseCredits(credit: credit);
 }

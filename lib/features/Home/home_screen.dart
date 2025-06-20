@@ -19,8 +19,11 @@ import 'package:graduation_project/features/dashboard/Domain/usecases/get_all_vi
 import 'package:graduation_project/features/dashboard/Presentation/cubit/dashboard_cubit.dart';
 import 'package:graduation_project/features/dashboard/Presentation/screens/dashboard_screen.dart';
 import 'package:graduation_project/features/settings/Domain/usecases/get_user_profile_use_case.dart';
-import 'package:graduation_project/features/settings/Presentation/cubit/settings_cubit.dart';
+import 'package:graduation_project/features/settings/Presentation/cubits/cubit/credits_cubit.dart';
+import 'package:graduation_project/features/settings/Presentation/cubits/settings_cubit.dart';
 import 'package:graduation_project/features/settings/Presentation/screens/settings_screen.dart';
+import 'package:graduation_project/features/video%20details/cubit/video_details_cubit.dart';
+import 'package:graduation_project/features/video%20details/domain/usecases/video_details_use_case.dart';
 import 'package:graduation_project/features/videos/domain/usecases/generate_url_video_use_cases.dart';
 import 'package:graduation_project/features/videos/presentation/bloc/generate_url_video_bloc.dart';
 import 'package:graduation_project/features/videos/url_video_screen.dart';
@@ -38,13 +41,24 @@ class _HomeScreenState extends State<HomeScreen> {
 
   // Screens
   final List<Widget> _screens = [
-    BlocProvider(
-      create:
-          (context) => DashboardCubit(
-            useCase: getIt.get<DashboardInformationUseCase>(),
-            getAllVideosUseCase: getIt.get<GetAllVideosUseCase>(),
-          )..getDashboardInformation(),
+    MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create:
+              (context) => DashboardCubit(
+                useCase: getIt.get<DashboardInformationUseCase>(),
+                getAllVideosUseCase: getIt.get<GetAllVideosUseCase>(),
+              )..getDashboardInformation(),
 
+          // ..getAllVideos(),
+        ),
+        BlocProvider(
+          create:
+              (context) => VideoDetailsCubit(
+                videoDetailsUseCase: getIt.get<VideoDetailsUseCase>(),
+              ),
+        ),
+      ],
       child: DashboardScreen(),
     ),
     BlocProvider(
@@ -77,11 +91,21 @@ class _HomeScreenState extends State<HomeScreen> {
       child: UrlVideoScreen(),
     ),
 
-    BlocProvider(
-      create:
-          (context) => SettingsCubit(
-            getUserProfileUseCase: getIt.get<GetUserProfileUseCase>(),
-          )..getUserProfile(),
+    MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create:
+              (context) => SettingsCubit(
+                getUserProfileUseCase: getIt.get<GetUserProfileUseCase>(),
+              )..getUserProfile(),
+        ),
+        BlocProvider(
+          create:
+              (context) => CreditsCubitCubit(
+                getUserProfileUseCase: getIt.get<GetUserProfileUseCase>(),
+              ),
+        ),
+      ],
       child: SettingsScreen(),
     ),
     AiAutopilotScreen(),

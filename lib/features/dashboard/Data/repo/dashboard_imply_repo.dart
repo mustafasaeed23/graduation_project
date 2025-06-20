@@ -29,7 +29,7 @@ class DashboardImplyRepo implements DashboardContractRepo {
   Future<Either<Failure, List<VideosEntity>>> getAllVideos() async {
     try {
       final result = await dashboardDataSource.getAllUserVideos();
-      return Right(result);
+      return result;
     } on ServerException catch (err) {
       return Left(ServerFailure(message: err.message));
     } catch (e) {
