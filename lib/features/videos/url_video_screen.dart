@@ -35,9 +35,9 @@ class _UrlVideoScreenState extends State<UrlVideoScreen> {
     if (await canLaunchUrl(uri)) {
       await launchUrl(uri, mode: LaunchMode.externalApplication);
     } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Could not launch $url')),
-      );
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text('Could not launch $url')));
     }
   }
 
@@ -282,7 +282,8 @@ class _UrlVideoScreenState extends State<UrlVideoScreen> {
                                 width: double.infinity,
                                 items: [
                                   "Egyptian",
-                                  "Syrian",
+                                  "Egyptian(prof.Ghada)",
+                                  "Egyptian(ms.Gehad)",
                                   "American",
                                   "British",
                                 ],

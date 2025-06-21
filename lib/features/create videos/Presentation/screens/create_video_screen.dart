@@ -264,9 +264,11 @@ class _CreateVideoScreenState extends State<CreateVideoScreen> {
                               width: double.infinity,
                               items: [
                                 "Egyptian",
-                                "Syrian",
+                                "Egyptian(prof.Ghada)",
+                                "Egyptian(ms.Gehad)",
                                 "American",
                                 "British",
+
                               ],
                               value: accentOption,
                               onChanged:
